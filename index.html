@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <base href="/">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Brianna Chiu: Motion Designer</title>
@@ -23,13 +24,38 @@ canvas {
 }
 </style>
 <script src="https://unpkg.com/@rive-app/canvas@latest"></script>
-<script src="./index.mjs" type="module"></script>
 </head>
 <body>
 <canvas id="riveCanvas"></canvas>
 <div id="widthDisplay"></div>
 <script>
     let riveInstance, widthNumInput;
+
+           // Load a demo reel image
+           const loadDemoReelImage = (asset, imageIndex) => {
+            const imagePath = `/assets/images/demo-reel-thumbnail/Reel gif_${imageIndex.toString().padStart(5, "0")}.png`;
+            console.log(`Attempting to load image: ${imagePath}`);
+            fetch(imagePath)
+                .then(async (res) => {
+                    if (res.ok) {
+                        console.log(`Successfully loaded image ${imageIndex}`);
+                        const arrayBuffer = await res.arrayBuffer();
+                        const image = await rive.decodeImage(new Uint8Array(arrayBuffer));
+                        asset.setRenderImage(image);
+                        image.unref();
+                    } else {
+                        console.error(`Image load failed for index: ${imageIndex}, Status: ${res.status}`);
+                    }
+                })
+                .catch((err) => console.error(`Error loading image ${imageIndex}:`, err));
+        };
+
+        // Load all demo reel images
+        const loadAllDemoReelImages = (asset) => {
+            for (let i = 0; i <= 173; i++) {
+                loadDemoReelImage(asset, i);
+            }
+        };
 
     function updateCanvasHeight() {
         const browserWidth = window.innerWidth;
@@ -112,6 +138,28 @@ canvas {
         autoplay: true,
         artboard: 'Site', // Ensure this artboard name is correct
         stateMachines: 'State Machine 1', // Ensure this state machine name is correct
+        assetLoader: (asset, bytes) => {
+                console.log("Asset loading:", {
+                    name: asset.name,
+                    fileExtension: asset.fileExtension,
+                    cdnUuid: asset.cdnUuid,
+                    isFont: asset.isFont,
+                    isImage: asset.isImage,
+                    bytes,
+                });
+
+                if (asset.isImage) {
+                    const loadWithDelay = (index) => {
+                        if (index <= 173) {
+                            loadDemoReelImage(asset, index);
+                            setTimeout(() => loadWithDelay(index + 1), 50);
+                        }
+                    };
+                    loadWithDelay(0);
+                    return true;
+                }
+                return false;
+            },
         onLoad: () => {
             const inputs = riveInstance.stateMachineInputs('State Machine 1'); // Ensure this state machine name is correct
             widthNumInput = inputs.find(i => i.name === 'width num'); // Ensure this input name is correct
