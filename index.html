@@ -31,31 +31,31 @@ canvas {
 <script>
     let riveInstance, widthNumInput;
 
-           // Load a demo reel image
-           const loadDemoReelImage = (asset, imageIndex) => {
-            const imagePath = `/assets/images/demo-reel-thumbnail/Reel gif_${imageIndex.toString().padStart(5, "0")}.png`;
-            console.log(`Attempting to load image: ${imagePath}`);
-            fetch(imagePath)
-                .then(async (res) => {
-                    if (res.ok) {
-                        console.log(`Successfully loaded image ${imageIndex}`);
-                        const arrayBuffer = await res.arrayBuffer();
-                        const image = await rive.decodeImage(new Uint8Array(arrayBuffer));
-                        asset.setRenderImage(image);
-                        image.unref();
-                    } else {
-                        console.error(`Image load failed for index: ${imageIndex}, Status: ${res.status}`);
-                    }
-                })
-                .catch((err) => console.error(`Error loading image ${imageIndex}:`, err));
-        };
+    // Load a demo reel image
+    const loadDemoReelImage = (asset, imageIndex) => {
+        const imagePath = `/assets/images/demo-reel-thumbnail/Reel gif_${imageIndex.toString().padStart(5, "0")}.png`;
+        console.log(`Attempting to load image: ${imagePath}`);
+        return fetch(imagePath)
+            .then(async (res) => {
+                if (res.ok) {
+                    console.log(`Successfully loaded image ${imageIndex}`);
+                    const arrayBuffer = await res.arrayBuffer();
+                    const image = await rive.decodeImage(new Uint8Array(arrayBuffer));
+                    asset.setRenderImage(image);
+                    image.unref();
+                } else {
+                    console.error(`Image load failed for index: ${imageIndex}, Status: ${res.status}`);
+                }
+            })
+            .catch((err) => console.error(`Error loading image ${imageIndex}:`, err));
+    };
 
-        // Load all demo reel images
-        const loadAllDemoReelImages = (asset) => {
-            for (let i = 0; i <= 173; i++) {
-                loadDemoReelImage(asset, i);
-            }
-        };
+    // Load all demo reel images
+    const loadAllDemoReelImages = (asset) => {
+        for (let i = 0; i <= 173; i++) {
+            loadDemoReelImage(asset, i);
+        }
+    };
 
     function updateCanvasHeight() {
         const browserWidth = window.innerWidth;
@@ -149,13 +149,23 @@ canvas {
                 });
 
                 if (asset.isImage) {
-                    const loadWithDelay = (index) => {
-                        if (index <= 173) {
-                            loadDemoReelImage(asset, index);
-                            setTimeout(() => loadWithDelay(index + 1), 50);
+                    // Replace 'PROFILE_ICON' with the name of the image that should stay embedded
+                    if (asset.name === 'profile') {
+                        // Use the embedded image data
+                        return false;
+                    }
+                    
+                    // For all other images, load from demo-reel-thumbnail
+                    let currentIndex = 0;
+                    const loadNextImage = () => {
+                        if (currentIndex <= 173) {
+                            loadDemoReelImage(asset, currentIndex);
+                            currentIndex++;
+                            // Wait for the current image to load before loading the next one
+                            setTimeout(loadNextImage, 100); // Increased delay to 100ms
                         }
                     };
-                    loadWithDelay(0);
+                    loadNextImage();
                     return true;
                 }
                 return false;
