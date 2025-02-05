@@ -1,3 +1,299 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5161e6d1b4a460885fa8ff0445ea3e5ed0a3b0a8b81afacb29c7b5070f9884ce
-size 5640
+body {
+    color: #2E2E2E;
+    background-color: #ECECEC;
+    font-family: montserrat, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 28px;
+}
+
+a {
+    color: #2E2E2E;
+    text-decoration: underline;
+    transition: opacity .2s;
+    display: block;
+}
+a:active {
+    color: #2E2E2E;
+}
+a:hover {
+    color: #983AB1;
+    transform: scale(.94);
+    transition: .3s;
+    
+}
+
+
+iframe {
+    width:100%;
+}
+
+.iframe-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    border-radius: 20px; /* Adjust for rounded corners */
+    border: 7px solid #ECECEC; /* First stroke (inner border) */
+    box-shadow: 0 0 0 5px #2E2E2E; /* Second stroke (outer border) */
+}
+
+.responsive-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px; /* Ensures iframe inherits rounded corners */
+    border: none;
+}
+
+.container---gapped {
+    text-align: left;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1140px;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.f-heading-detail-small {
+    color: #2E2E2E;
+    letter-spacing: .08em;
+    -webkit-text-stroke-color: #2E2E2E;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    margin-top: 30px;
+}
+
+.f-h3-heading {
+    box-sizing: border-box;
+    color: #983AB1;
+    letter-spacing: -.02em;
+    flex-flow: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 370px;
+    margin-top: -2;
+    margin-bottom: -15;
+    font-size: 50px;
+    line-height: 1.1;
+    font-weight: 800;
+    display: flex;
+}
+.f-paragraph-large {
+    letter-spacing: -.02em;
+    margin-bottom: 0;
+    font-size: 18px;
+    line-height: 32px;
+}
+
+/* bri's STINKY LINES */
+
+.container-2 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.w-layout-blockcontainer {
+    max-width: 940px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    
+}
+.w-container {
+    max-width: 940px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.f-breadcrumb-wrapper {
+    grid-column-gap: 8px;
+    grid-row-gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    display: flex
+;
+}
+.f-breadcrumb-home, .f-breadcrumb-link {
+    color: #2E2E2E;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color .3s;
+}
+.w-inline-block {
+    max-width: 100%;
+    display: inline-block;
+}
+
+.f-breadcrumb-home:hover, .f-breadcrumb-link:hover {
+    color: #983AB1;
+}
+
+
+/* end bri's STINKY LINES */
+
+/* mr paul code (secret) */
+.mr-paul {
+    width:20px;
+    height:40px;
+    /* width:200px;
+    height:400px */
+}
+.mr-paul-container {
+    width:100%;
+    margin-top:500px;
+}
+
+
+/* end mr paul code (secret) */
+
+
+
+/* gallery attempt start*/
+
+
+.project-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the items when there's space */
+    align-items: stretch; /* Ensure all items take the full height */
+    gap: 20px; /* Adds space between projects */
+    width: 100%;
+    padding: 40px 0;
+}
+
+.project-item {
+    flex: 1 1 calc(33.333% - 20px); /* Default: 3 items per row */
+    min-width: 300px; 
+    max-width: 100%; 
+    aspect-ratio: 16/9; 
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    border-radius: 20px; /* Adjust for rounded corners */
+    border: 5px solid #ECECEC; /* First stroke (inner border) */
+    box-shadow: 0 0 0 3px #2E2E2E; /* Second stroke (outer border) */
+}
+
+@media (max-width: 900px) {
+    .project-item {
+        flex: 1 1 calc(50% - 20px); /* 2 items per row on medium screens */
+    }
+}
+
+@media (max-width: 600px) {
+    .project-item {
+        flex: 1 1 100%; /* 1 item per row on small screens */
+    }
+}
+
+
+
+.project-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 5px #983AB1;
+    transition: opacity transform 0.3s ease;
+}
+
+/* Ensuring all images fill the container */
+.project-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+}
+
+/* Hover effect for GIF transition */
+.project-item:hover .static-img {
+    opacity: 0;
+}
+
+.project-item .gif-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.project-item:hover .gif-img {
+    opacity: 1;
+    filter: brightness(50%); /* Makes the gif darker on hover */
+}
+
+.project-info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Reduce spacing between icon and text */
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-item:hover .project-info {
+    opacity: 1;
+}
+
+/* Smaller icon */
+.project-icon {
+    width: 50px;
+    height: 50px;
+    fill: white;
+}
+
+
+
+
+/* gallery attempt end */
+
+
+
+
+/* ANIMATION */
+
+body {
+    color: #2E2E2E;
+    background-color: #ECECEC;
+    font-family: montserrat, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 28px;
+    
+    /* Initial state for fade-in effect */
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

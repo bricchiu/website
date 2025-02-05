@@ -1,3 +1,129 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:755a60adf9a95a19b3055e9290507bb83d38372a1e24af0a10d8b673d69d5697
-size 4449
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brianna Chiu: Motion Designer</title>
+<style>
+body, html {
+    margin: 0;
+    font-size: 0px;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-y: auto;   /* Allow vertical scrolling */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ECECEC;
+}
+canvas {
+    width: 4000px; /* Set canvas width manually */
+    margin: 0 auto; /* Center the canvas horizontally */
+    display: block; /* Ensure proper centering */
+}
+</style>
+<script src="https://unpkg.com/@rive-app/canvas@latest"></script>
+</head>
+<body>
+<canvas id="riveCanvas"></canvas>
+<div id="widthDisplay"></div>
+<script>
+    let riveInstance, widthNumInput;
+
+    function updateCanvasHeight() {
+        const browserWidth = window.innerWidth;
+        const canvas = document.getElementById('riveCanvas');
+        const widthDisplay = document.getElementById('widthDisplay');
+
+        widthDisplay.innerText = browserWidth + ' px';
+
+        // Update Rive input if available
+        if (widthNumInput) {
+            widthNumInput.value = browserWidth;
+        }
+
+        // Update canvas height based on breakpoint
+        if (browserWidth >= 1500) {
+            canvas.style.height = '2205px'; // wide height
+        } else {
+            canvas.style.height = '3054px'; // skinny height
+        }
+
+        // Ensure Rive redraws on canvas resize
+        if (riveInstance) {
+            riveInstance.resizeDrawingSurfaceToCanvas();
+        }
+    }
+
+    // function onRiveEventReceived(riveEvent) {
+    //     const eventData = riveEvent.data;
+    //     if (eventData.type === rive.RiveEventType.OpenUrl) {
+    //         console.log("Event triggered:", eventData.name);
+    //         console.log("Opening URL:", eventData.url);
+            
+    //         // Open the URL in a new tab
+    //         window.open(eventData.url, "_blank");
+
+
+    //     }
+    // }
+
+    function onRiveEventReceived(riveEvent) {
+    const eventData = riveEvent.data;
+
+    if (eventData.type === rive.RiveEventType.OpenUrl) {
+        console.log("Event triggered:", eventData.name);
+
+        switch (eventData.name) {
+            case "Email":
+                console.log("Opening Email");
+                window.open("https://mail.google.com/mail/u/0/?fs=1&to=bri.mograph@gmail.com&su=Hi%20Bri!&body=You%27re%20so%20cool%20and%20I%27m%20so%20cool.%20We%20should%20work%20together!&tf=cm", "_blank");
+                break;
+            case "Resume":
+                console.log("Opening Resume");
+                window.open("https://drive.google.com/file/d/1Un9slfnD87eTaGfLCBiulZFgyjUqh061/view?usp=drive_link", "_blank");
+                break;
+            case "Demo-Reel":
+                console.log("Navigating to Demo Reel");
+                window.location.href = "/pages/demo-reel.html";
+                break;
+            case "contact":
+                console.log("Navigating to Contact");
+                window.location.href = "/contact.html";
+                break;
+            case "externalLink":
+                console.log("Opening External Link:", eventData.url);
+                window.open(eventData.url, "_blank");
+                break;
+            default:
+                console.log("Default action: Opening URL");
+                window.open(eventData.url, "_blank");
+        }
+    }
+}
+
+
+
+    // Initialize Rive
+    riveInstance = new rive.Rive({
+        src: 'layouts.riv', // Ensure this file name is correct
+        canvas: document.getElementById('riveCanvas'),
+        autoplay: true,
+        artboard: 'Site', // Ensure this artboard name is correct
+        stateMachines: 'State Machine 1', // Ensure this state machine name is correct
+        onLoad: () => {
+            const inputs = riveInstance.stateMachineInputs('State Machine 1'); // Ensure this state machine name is correct
+            widthNumInput = inputs.find(i => i.name === 'width num'); // Ensure this input name is correct
+            riveInstance.resizeDrawingSurfaceToCanvas();
+
+            // Update canvas height on load and resize
+            updateCanvasHeight();
+            window.onresize = updateCanvasHeight;
+        }
+    });
+
+    // Listen for Rive Events
+    riveInstance.on(rive.EventType.RiveEvent, onRiveEventReceived);
+</script>
+</body>
+</html>
