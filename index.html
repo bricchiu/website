@@ -34,36 +34,47 @@ canvas {
         const totalImages = 174; // 0 to 173
         const preloadedImages = [];
         let allImagesLoaded = false;
-        let currentlyDisplaying = 0; // Track which image is currently showing
 
-        console.log("Starting to preload all images...");
+        console.log("Starting to preload images...");
 
+        // Load and display first image immediately and separately
         try {
-            // Load first image
+            console.log("Loading first frame...");
             const firstImagePath = `/assets/images/demo-reel-thumbnail/Reel gif_00000.png`;
-            const firstResponse = await fetch(firstImagePath);
+            const firstResponse = await fetch(firstImagePath, { priority: 'high' }); // Set high priority for first image
             const firstArrayBuffer = await firstResponse.arrayBuffer();
             preloadedImages[0] = new Uint8Array(firstArrayBuffer);
-            console.log("First frame loaded: Reel gif_00000.png");
+            console.log("First frame loaded successfully!");
 
-            // Load remaining images
-            for (let i = 1; i < totalImages; i++) {
-                const paddedIndex = i.toString().padStart(5, "0");
-                const imagePath = `/assets/images/demo-reel-thumbnail/Reel gif_${paddedIndex}.png`;
+            // Start loading remaining images in the background
+            const loadRemainingImages = async () => {
+                for (let i = 1; i < totalImages; i++) {
+                    const paddedIndex = i.toString().padStart(5, "0");
+                    const imagePath = `/assets/images/demo-reel-thumbnail/Reel gif_${paddedIndex}.png`;
+                    
+                    try {
+                        const response = await fetch(imagePath);
+                        const arrayBuffer = await response.arrayBuffer();
+                        preloadedImages[i] = new Uint8Array(arrayBuffer);
+                        console.log(`Preloaded image ${paddedIndex}`);
+                    } catch (err) {
+                        console.error(`Failed to load image ${paddedIndex}:`, err);
+                    }
+                }
                 
-                const response = await fetch(imagePath);
-                const arrayBuffer = await response.arrayBuffer();
-                preloadedImages[i] = new Uint8Array(arrayBuffer);
-                console.log(`Preloaded image: Reel gif_${paddedIndex}.png`);
-            }
+                console.log("All images preloaded!");
+                allImagesLoaded = true;
+            };
 
-            console.log("All images preloaded successfully!");
-            allImagesLoaded = true;
-            return { preloadedImages, allImagesLoaded, currentlyDisplaying };
+            // Start loading remaining images without waiting
+            loadRemainingImages();
+
+            // Return immediately after first image is loaded
+            return { preloadedImages, allImagesLoaded };
 
         } catch (err) {
-            console.error("Error during image preloading:", err);
-            return { preloadedImages, allImagesLoaded: false, currentlyDisplaying };
+            console.error("Failed to load first frame:", err);
+            return { preloadedImages: null, allImagesLoaded: false };
         }
     };
 
@@ -170,7 +181,7 @@ canvas {
     // Initialize Rive with preloaded images
     let preloadedImages = null;
     let allImagesLoaded = false;
-    preloadAllImages().then(({ preloadedImages: images, allImagesLoaded: loaded, currentlyDisplaying }) => {
+    preloadAllImages().then(({ preloadedImages: images, allImagesLoaded: loaded }) => {
         preloadedImages = images;
         allImagesLoaded = loaded;
         
@@ -195,21 +206,23 @@ canvas {
                         return false;
                     }
 
+                    // Check if first frame is available
                     if (!preloadedImages || !preloadedImages[0]) {
-                        console.error("First frame not available");
+                        console.error("First frame not available yet");
                         return false;
                     }
 
-                    // Only decode and show the first image initially
+                    // Immediately decode and display first frame
+                    console.log("Setting first frame...");
                     rive.decodeImage(preloadedImages[0])
                         .then(image => {
                             asset.setRenderImage(image);
                             image.unref();
+                            console.log("First frame set successfully!");
                             
-                            // Don't start animation until explicitly triggered
                             const startSequence = () => {
                                 if (allImagesLoaded) {
-                                    console.log("All images loaded - Starting animation sequence");
+                                    console.log("Starting animation sequence...");
                                     let currentIndex = 1;
                                     
                                     const playSequence = async () => {
@@ -223,16 +236,16 @@ canvas {
                                         }
                                     };
 
-                                    // Only start playing sequence when everything is ready
                                     requestAnimationFrame(playSequence);
                                 } else {
-                                    // Keep checking but don't change the image
                                     setTimeout(startSequence, 100);
                                 }
                             };
 
-                            // Begin checking for complete preload
                             setTimeout(startSequence, 100);
+                        })
+                        .catch(err => {
+                            console.error("Error setting first frame:", err);
                         });
 
                     return true;
