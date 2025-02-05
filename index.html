@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="/">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Brianna Chiu: Motion Designer</title>
@@ -30,6 +29,43 @@ canvas {
 <div id="widthDisplay"></div>
 <script>
     let riveInstance, widthNumInput;
+
+    const preloadAllImages = async () => {
+        const totalImages = 174; // 0 to 173
+        const preloadedImages = [];
+        let allImagesLoaded = false;
+        let currentlyDisplaying = 0; // Track which image is currently showing
+
+        console.log("Starting to preload all images...");
+
+        try {
+            // Load first image
+            const firstImagePath = `/assets/images/demo-reel-thumbnail/Reel gif_00000.png`;
+            const firstResponse = await fetch(firstImagePath);
+            const firstArrayBuffer = await firstResponse.arrayBuffer();
+            preloadedImages[0] = new Uint8Array(firstArrayBuffer);
+            console.log("First frame loaded: Reel gif_00000.png");
+
+            // Load remaining images
+            for (let i = 1; i < totalImages; i++) {
+                const paddedIndex = i.toString().padStart(5, "0");
+                const imagePath = `/assets/images/demo-reel-thumbnail/Reel gif_${paddedIndex}.png`;
+                
+                const response = await fetch(imagePath);
+                const arrayBuffer = await response.arrayBuffer();
+                preloadedImages[i] = new Uint8Array(arrayBuffer);
+                console.log(`Preloaded image: Reel gif_${paddedIndex}.png`);
+            }
+
+            console.log("All images preloaded successfully!");
+            allImagesLoaded = true;
+            return { preloadedImages, allImagesLoaded, currentlyDisplaying };
+
+        } catch (err) {
+            console.error("Error during image preloading:", err);
+            return { preloadedImages, allImagesLoaded: false, currentlyDisplaying };
+        }
+    };
 
     // Load a demo reel image
     const loadDemoReelImage = (asset, imageIndex) => {
@@ -131,14 +167,20 @@ canvas {
 
 
 
-    // Initialize Rive
-    riveInstance = new rive.Rive({
-        src: 'layouts.riv', // Ensure this file name is correct
-        canvas: document.getElementById('riveCanvas'),
-        autoplay: true,
-        artboard: 'Site', // Ensure this artboard name is correct
-        stateMachines: 'State Machine 1', // Ensure this state machine name is correct
-        assetLoader: (asset, bytes) => {
+    // Initialize Rive with preloaded images
+    let preloadedImages = null;
+    let allImagesLoaded = false;
+    preloadAllImages().then(({ preloadedImages: images, allImagesLoaded: loaded, currentlyDisplaying }) => {
+        preloadedImages = images;
+        allImagesLoaded = loaded;
+        
+        riveInstance = new rive.Rive({
+            src: 'layouts.riv',
+            canvas: document.getElementById('riveCanvas'),
+            autoplay: true,
+            artboard: 'Site', // Ensure this artboard name is correct
+            stateMachines: 'State Machine 1', // Ensure this state machine name is correct
+            assetLoader: (asset, bytes) => {
                 console.log("Asset loading:", {
                     name: asset.name,
                     fileExtension: asset.fileExtension,
@@ -149,40 +191,68 @@ canvas {
                 });
 
                 if (asset.isImage) {
-                    // Replace 'PROFILE_ICON' with the name of the image that should stay embedded
                     if (asset.name === 'profile') {
-                        // Use the embedded image data
                         return false;
                     }
-                    
-                    // For all other images, load from demo-reel-thumbnail
-                    let currentIndex = 0;
-                    const loadNextImage = () => {
-                        if (currentIndex <= 173) {
-                            loadDemoReelImage(asset, currentIndex);
-                            currentIndex++;
-                            // Wait for the current image to load before loading the next one
-                            setTimeout(loadNextImage, 100); // Increased delay to 100ms
-                        }
-                    };
-                    loadNextImage();
+
+                    if (!preloadedImages || !preloadedImages[0]) {
+                        console.error("First frame not available");
+                        return false;
+                    }
+
+                    // Only decode and show the first image initially
+                    rive.decodeImage(preloadedImages[0])
+                        .then(image => {
+                            asset.setRenderImage(image);
+                            image.unref();
+                            
+                            // Don't start animation until explicitly triggered
+                            const startSequence = () => {
+                                if (allImagesLoaded) {
+                                    console.log("All images loaded - Starting animation sequence");
+                                    let currentIndex = 1;
+                                    
+                                    const playSequence = async () => {
+                                        if (currentIndex < preloadedImages.length) {
+                                            const nextImage = await rive.decodeImage(preloadedImages[currentIndex]);
+                                            asset.setRenderImage(nextImage);
+                                            nextImage.unref();
+                                            currentIndex++;
+                                            await new Promise(resolve => setTimeout(resolve, 50));
+                                            requestAnimationFrame(playSequence);
+                                        }
+                                    };
+
+                                    // Only start playing sequence when everything is ready
+                                    requestAnimationFrame(playSequence);
+                                } else {
+                                    // Keep checking but don't change the image
+                                    setTimeout(startSequence, 100);
+                                }
+                            };
+
+                            // Begin checking for complete preload
+                            setTimeout(startSequence, 100);
+                        });
+
                     return true;
                 }
                 return false;
             },
-        onLoad: () => {
-            const inputs = riveInstance.stateMachineInputs('State Machine 1'); // Ensure this state machine name is correct
-            widthNumInput = inputs.find(i => i.name === 'width num'); // Ensure this input name is correct
-            riveInstance.resizeDrawingSurfaceToCanvas();
+            onLoad: () => {
+                const inputs = riveInstance.stateMachineInputs('State Machine 1'); // Ensure this state machine name is correct
+                widthNumInput = inputs.find(i => i.name === 'width num'); // Ensure this input name is correct
+                riveInstance.resizeDrawingSurfaceToCanvas();
 
-            // Update canvas height on load and resize
-            updateCanvasHeight();
-            window.onresize = updateCanvasHeight;
-        }
+                // Update canvas height on load and resize
+                updateCanvasHeight();
+                window.onresize = updateCanvasHeight;
+            }
+        });
+
+        // Listen for Rive Events
+        riveInstance.on(rive.EventType.RiveEvent, onRiveEventReceived);
     });
-
-    // Listen for Rive Events
-    riveInstance.on(rive.EventType.RiveEvent, onRiveEventReceived);
 </script>
 </body>
 </html>
