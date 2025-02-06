@@ -132,30 +132,17 @@ canvas {
                 let currentIndex = 0;
                 const loadNextImage = () => {
                     if (currentIndex <= 173) {
-                        // Log current location info for debugging
-                        console.log('Current location:', {
-                            hostname: window.location.hostname,
-                            pathname: window.location.pathname,
-                            origin: window.location.origin
-                        });
-
-                        // More specific GitHub Pages detection
-                        const isGitHubPages = window.location.hostname.includes('github.io');
-                        const baseUrl = isGitHubPages ? '/website' : '';
-                        
-                        // Keep spaces in filename but encode the URL properly
+                        // Use the absolute URL that we know works
                         const formattedIndex = currentIndex.toString().padStart(5, "0");
                         const filename = encodeURIComponent(`Reel gif_${formattedIndex}.png`);
-                        const imagePath = `${baseUrl}/assets/images/demo-reel-thumbnail/${filename}`;
+                        const imagePath = `https://bricchiu.github.io/website/assets/images/demo-reel-thumbnail/${filename}`;
                         
-                        // Log full URL being attempted
-                        const fullUrl = window.location.origin + imagePath;
-                        console.log('Attempting to load image from:', fullUrl);
+                        console.log('Attempting to load image from:', imagePath);
 
                         fetch(imagePath)
                             .then(res => {
                                 if (!res.ok) {
-                                    console.error(`Failed to load image ${currentIndex}. Status: ${res.status}, URL: ${fullUrl}`);
+                                    console.error(`Failed to load image ${currentIndex}. Status: ${res.status}, URL: ${imagePath}`);
                                     throw new Error(`Failed to load image ${currentIndex}`);
                                 }
                                 return res.arrayBuffer();
