@@ -142,7 +142,11 @@ canvas {
                         // More specific GitHub Pages detection
                         const isGitHubPages = window.location.hostname.includes('github.io');
                         const baseUrl = isGitHubPages ? '/website' : '';
-                        const imagePath = `${baseUrl}/assets/images/demo-reel-thumbnail/Reel gif_${currentIndex.toString().padStart(5, "00000")}.png`;
+                        
+                        // Keep spaces in filename but encode the URL properly
+                        const formattedIndex = currentIndex.toString().padStart(5, "0");
+                        const filename = encodeURIComponent(`Reel gif_${formattedIndex}.png`);
+                        const imagePath = `${baseUrl}/assets/images/demo-reel-thumbnail/${filename}`;
                         
                         // Log full URL being attempted
                         const fullUrl = window.location.origin + imagePath;
