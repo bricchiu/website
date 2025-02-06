@@ -33,83 +33,11 @@ canvas {
     const preloadAllImages = async () => {
         const totalImages = 174; // 0 to 173
         const preloadedImages = [];
-        let allImagesLoaded = false;
 
-        console.log("Starting to preload images...");
+        console.log("Starting to preload all images...");
 
-        // Load and display first image immediately and separately
-        try {
-            console.log("Loading first frame...");
-            const firstImagePath = `/assets/images/demo-reel-thumbnail/Reel gif_00000.png`;
-            const firstResponse = await fetch(firstImagePath, { priority: 'high' }); // Set high priority for first image
-            const firstArrayBuffer = await firstResponse.arrayBuffer();
-            preloadedImages[0] = new Uint8Array(firstArrayBuffer);
-            console.log("First frame loaded successfully!");
 
-            // Start loading remaining images in the background
-            const loadRemainingImages = async () => {
-                for (let i = 1; i < totalImages; i++) {
-                    const paddedIndex = i.toString().padStart(5, "0");
-                    const imagePath = `/assets/images/demo-reel-thumbnail/Reel gif_${paddedIndex}.png`;
-                    
-                    try {
-                        const response = await fetch(imagePath);
-                        const arrayBuffer = await response.arrayBuffer();
-                        preloadedImages[i] = new Uint8Array(arrayBuffer);
-                        console.log(`Preloaded image ${paddedIndex}`);
-                    } catch (err) {
-                        console.error(`Failed to load image ${paddedIndex}:`, err);
-                    }
-                }
-                
-                console.log("All images preloaded!");
-                allImagesLoaded = true;
-            };
 
-            // Start loading remaining images without waiting
-            loadRemainingImages();
-
-            // Return immediately after first image is loaded
-            return { preloadedImages, allImagesLoaded };
-
-        } catch (err) {
-            console.error("Failed to load first frame:", err);
-            return { preloadedImages: null, allImagesLoaded: false };
-        }
-    };
-
-    // Load a demo reel image
-    const loadDemoReelImage = (asset, imageIndex) => {
-        const imagePath = `/assets/images/demo-reel-thumbnail/Reel gif_${imageIndex.toString().padStart(5, "0")}.png`;
-        console.log(`Attempting to load image: ${imagePath}`);
-        return fetch(imagePath)
-            .then(async (res) => {
-                if (res.ok) {
-                    console.log(`Successfully loaded image ${imageIndex}`);
-                    const arrayBuffer = await res.arrayBuffer();
-                    const image = await rive.decodeImage(new Uint8Array(arrayBuffer));
-                    asset.setRenderImage(image);
-                    image.unref();
-                } else {
-                    console.error(`Image load failed for index: ${imageIndex}, Status: ${res.status}`);
-                }
-            })
-            .catch((err) => console.error(`Error loading image ${imageIndex}:`, err));
-    };
-
-    // Load all demo reel images
-    const loadAllDemoReelImages = (asset) => {
-        for (let i = 0; i <= 173; i++) {
-            loadDemoReelImage(asset, i);
-        }
-    };
-
-    function updateCanvasHeight() {
-        const browserWidth = window.innerWidth;
-        const canvas = document.getElementById('riveCanvas');
-        const widthDisplay = document.getElementById('widthDisplay');
-
-        widthDisplay.innerText = browserWidth + ' px';
 
         // Update Rive input if available
         if (widthNumInput) {
@@ -178,94 +106,67 @@ canvas {
 
 
 
-    // Initialize Rive with preloaded images
-    let preloadedImages = null;
-    let allImagesLoaded = false;
-    preloadAllImages().then(({ preloadedImages: images, allImagesLoaded: loaded }) => {
-        preloadedImages = images;
-        allImagesLoaded = loaded;
-        
-        riveInstance = new rive.Rive({
-            src: 'layouts.riv',
-            canvas: document.getElementById('riveCanvas'),
-            autoplay: true,
-            artboard: 'Site', // Ensure this artboard name is correct
-            stateMachines: 'State Machine 1', // Ensure this state machine name is correct
-            assetLoader: (asset, bytes) => {
-                console.log("Asset loading:", {
-                    name: asset.name,
-                    fileExtension: asset.fileExtension,
-                    cdnUuid: asset.cdnUuid,
-                    isFont: asset.isFont,
-                    isImage: asset.isImage,
-                    bytes,
-                });
+    // Initialize Rive
+    riveInstance = new rive.Rive({
+        src: 'layouts.riv',
+        canvas: document.getElementById('riveCanvas'),
+        autoplay: true,
+        artboard: 'Site', // Ensure this artboard name is correct
+        stateMachines: 'State Machine 1', // Ensure this state machine name is correct
+        assetLoader: (asset, bytes) => {
+            console.log("Asset loading:", {
+                name: asset.name,
+                fileExtension: asset.fileExtension,
+                cdnUuid: asset.cdnUuid,
+                isFont: asset.isFont,
+                isImage: asset.isImage,
+                bytes,
+            });
 
-                if (asset.isImage) {
-                    if (asset.name === 'profile') {
-                        return false;
-                    }
-
-                    // Check if first frame is available
-                    if (!preloadedImages || !preloadedImages[0]) {
-                        console.error("First frame not available yet");
-                        return false;
-                    }
-
-                    // Immediately decode and display first frame
-                    console.log("Setting first frame...");
-                    rive.decodeImage(preloadedImages[0])
-                        .then(image => {
-                            asset.setRenderImage(image);
-                            image.unref();
-                            console.log("First frame set successfully!");
-                            
-                            const startSequence = () => {
-                                if (allImagesLoaded) {
-                                    console.log("Starting animation sequence...");
-                                    let currentIndex = 1;
-                                    
-                                    const playSequence = async () => {
-                                        if (currentIndex < preloadedImages.length) {
-                                            const nextImage = await rive.decodeImage(preloadedImages[currentIndex]);
-                                            asset.setRenderImage(nextImage);
-                                            nextImage.unref();
-                                            currentIndex++;
-                                            await new Promise(resolve => setTimeout(resolve, 50));
-                                            requestAnimationFrame(playSequence);
-                                        }
-                                    };
-
-                                    requestAnimationFrame(playSequence);
-                                } else {
-                                    setTimeout(startSequence, 100);
-                                }
-                            };
-
-                            setTimeout(startSequence, 100);
-                        })
-                        .catch(err => {
-                            console.error("Error setting first frame:", err);
-                        });
-
-                    return true;
+            if (asset.isImage) {
+                if (asset.name === 'profile') {
+                    return false;
                 }
-                return false;
-            },
-            onLoad: () => {
-                const inputs = riveInstance.stateMachineInputs('State Machine 1'); // Ensure this state machine name is correct
-                widthNumInput = inputs.find(i => i.name === 'width num'); // Ensure this input name is correct
-                riveInstance.resizeDrawingSurfaceToCanvas();
-
-                // Update canvas height on load and resize
-                updateCanvasHeight();
-                window.onresize = updateCanvasHeight;
+                
+                // Load images in sequence
+                let currentIndex = 0;
+                const loadNextImage = () => {
+                    if (currentIndex <= 173) {
+                        const imagePath = `/assets/images/demo-reel-thumbnail/Reel gif_${currentIndex.toString().padStart(5, "00000")}.png`;
+                        fetch(imagePath)
+                            .then(res => {
+                                if (res.ok) return res.arrayBuffer();
+                                throw new Error(`Failed to load image ${currentIndex}`);
+                            })
+                            .then(arrayBuffer => rive.decodeImage(new Uint8Array(arrayBuffer)))
+                            .then(image => {
+                                asset.setRenderImage(image);
+                                image.unref();
+                                currentIndex++;
+                                loadNextImage(); // Load next image only after current one is set
+                            })
+                            .catch(err => console.error(`Error with image ${currentIndex}:`, err));
+                    }
+                };
+                
+                loadNextImage();
+                return true;
             }
-        });
+            return false;
+        },
+        onLoad: () => {
+            const inputs = riveInstance.stateMachineInputs('State Machine 1'); // Ensure this state machine name is correct
+            widthNumInput = inputs.find(i => i.name === 'width num'); // Ensure this input name is correct
+            riveInstance.resizeDrawingSurfaceToCanvas();
 
-        // Listen for Rive Events
-        riveInstance.on(rive.EventType.RiveEvent, onRiveEventReceived);
+            // Update canvas height on load and resize
+            updateCanvasHeight();
+            window.onresize = updateCanvasHeight;
+        }
     });
+
+    // Listen for Rive Events
+    riveInstance.on(rive.EventType.RiveEvent, onRiveEventReceived);
 </script>
 </body>
 </html>
