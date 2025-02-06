@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Brianna Chiu: Motion Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
 <style>
 body, html {
     margin: 0;
@@ -18,17 +19,66 @@ body, html {
 }
 canvas {
     width: 4000px; /* Set canvas width manually */
-    margin: 0 auto; /* Center the canvas horizontammmlly */
+    margin: 0 auto; /* Center the canvas horizontally */
     display: block; /* Ensure proper centering */
+}
+
+.video-container {
+    position: relative;
+    width: min(1000px, 90vw);
+    height: min(635px, 57vw);
+    background-image: url('assets/images/demo-box.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+    margin: 0 auto;
+}
+
+#mainVideo {
+    width: 85%; /* Reduced from 90% */
+    height: 85%; /* Reduced from 90% */
+    object-fit: contain;
+    border-radius: 12px; /* Reduced from 20px */
+    margin-top: 14px;
+}
+
+.section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 100px;
+    color: #2E2E2E;
+    margin-bottom: -70px;
+    margin-left: -200px;
+    text-align: left;
+    -webkit-text-stroke: 3.5px #2E2E2E; /* Increased stroke for larger text */
 }
 </style>
 <script src="https://unpkg.com/@rive-app/canvas@latest"></script>
 </head>
 <body>
-<canvas id="riveCanvas"></canvas>
-<div id="widthDisplay"></div>
+<canvas id="riveCanvasTop"></canvas>
+
+<h2 class="section-title">PROJECTS</h2>
+<div class="video-container">
+    <iframe 
+        src="https://player.vimeo.com/video/535597247?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1"
+        width="90%"
+        height="80%"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+        title="2021 Motion Graphic Reel"
+        style="border-radius: 12px; margin-top: 12px; margin-left: 4px; object-fit: cover;"
+    ></iframe>
+</div>
+
+<canvas id="riveCanvasBottom"></canvas>
+
 <script>
-    let riveInstance, widthNumInput;
+    let riveInstanceTop, riveInstanceBottom, widthNumInput;
 
     const preloadAllImages = async () => {
         const totalImages = 174; // 0 to 173
@@ -107,9 +157,9 @@ canvas {
 
 
     // Initialize Rive
-    riveInstance = new rive.Rive({
+    riveInstanceTop = new rive.Rive({
         src: 'layouts.riv',
-        canvas: document.getElementById('riveCanvas'),
+        canvas: document.getElementById('riveCanvasTop'),
         autoplay: true,
         artboard: 'Site', // Ensure this artboard name is correct
         stateMachines: 'State Machine 1', // Ensure this state machine name is correct
@@ -164,9 +214,9 @@ canvas {
             return false;
         },
         onLoad: () => {
-            const inputs = riveInstance.stateMachineInputs('State Machine 1'); // Ensure this state machine name is correct
+            const inputs = riveInstanceTop.stateMachineInputs('State Machine 1'); // Ensure this state machine name is correct
             widthNumInput = inputs.find(i => i.name === 'width num'); // Ensure this input name is correct
-            riveInstance.resizeDrawingSurfaceToCanvas();
+            riveInstanceTop.resizeDrawingSurfaceToCanvas();
 
             // Update canvas height on load and resize
             updateCanvasHeight();
@@ -174,8 +224,107 @@ canvas {
         }
     });
 
+    // Second Rive instance using layoutsbottom.riv
+    riveInstanceBottom = new rive.Rive({
+        src: 'layoutsbottom.riv',
+        canvas: document.getElementById('riveCanvasBottom'),
+        autoplay: true,
+        artboard: 'Site',
+        stateMachines: 'State Machine 1',
+        assetLoader: (asset, bytes) => {
+            console.log("Asset loading:", {
+                name: asset.name,
+                fileExtension: asset.fileExtension,
+                cdnUuid: asset.cdnUuid,
+                isFont: asset.isFont,
+                isImage: asset.isImage,
+                bytes,
+            });
+
+            if (asset.isImage) {
+                if (asset.name === 'profile') {
+                    return false;
+                }
+                
+                // Load images in sequence
+                let currentIndex = 0;
+                const loadNextImage = () => {
+                    if (currentIndex <= 173) {
+                        // Use the absolute URL that we know works
+                        const formattedIndex = currentIndex.toString().padStart(5, "0");
+                        const filename = encodeURIComponent(`Reel gif_${formattedIndex}.png`);
+                        const imagePath = `https://bricchiu.github.io/website/assets/images/demo-reel-thumbnail/${filename}`;
+                        
+                        console.log('Attempting to load image from:', imagePath);
+
+                        fetch(imagePath)
+                            .then(res => {
+                                if (!res.ok) {
+                                    console.error(`Failed to load image ${currentIndex}. Status: ${res.status}, URL: ${imagePath}`);
+                                    throw new Error(`Failed to load image ${currentIndex}`);
+                                }
+                                return res.arrayBuffer();
+                            })
+                            .then(arrayBuffer => rive.decodeImage(new Uint8Array(arrayBuffer)))
+                            .then(image => {
+                                asset.setRenderImage(image);
+                                image.unref();
+                                currentIndex++;
+                                loadNextImage(); // Load next image only after current one is set
+                            })
+                            .catch(err => console.error(`Error with image ${currentIndex}:`, err));
+                    }
+                };
+                
+                loadNextImage();
+                return true;
+            }
+            return false;
+        },
+        onLoad: () => {
+            const inputs = riveInstanceBottom.stateMachineInputs('State Machine 1'); // Ensure this state machine name is correct
+            widthNumInput = inputs.find(i => i.name === 'width num'); // Ensure this input name is correct
+            riveInstanceBottom.resizeDrawingSurfaceToCanvas();
+
+            // Update canvas height on load and resize
+            updateCanvasHeight();
+            window.onresize = updateCanvasHeight;
+        }
+    });
+
+    // Update both canvases when the window resizes
+    function updateCanvasHeight() {
+        const browserWidth = window.innerWidth;
+        const topCanvas = document.getElementById('riveCanvasTop');
+        const bottomCanvas = document.getElementById('riveCanvasBottom');
+
+        if (browserWidth >= 1500) {
+            topCanvas.style.height = '1102px';    // Half of 2205px
+            bottomCanvas.style.height = '1102px';
+        } else {
+            topCanvas.style.height = '1527px';    // Half of 3054px
+            bottomCanvas.style.height = '1527px';
+        }
+
+        // Update width inputs for both instances
+        if (riveInstanceTop && riveInstanceBottom) {
+            const topInputs = riveInstanceTop.stateMachineInputs('State Machine 1');
+            const bottomInputs = riveInstanceBottom.stateMachineInputs('State Machine 1');
+            
+            const topWidthInput = topInputs.find(i => i.name === 'width num');
+            const bottomWidthInput = bottomInputs.find(i => i.name === 'width num');
+            
+            if (topWidthInput) topWidthInput.value = browserWidth;
+            if (bottomWidthInput) bottomWidthInput.value = browserWidth;
+            
+            riveInstanceTop.resizeDrawingSurfaceToCanvas();
+            riveInstanceBottom.resizeDrawingSurfaceToCanvas();
+        }
+    }
+
     // Listen for Rive Events
-    riveInstance.on(rive.EventType.RiveEvent, onRiveEventReceived);
+    riveInstanceTop.on(rive.EventType.RiveEvent, onRiveEventReceived);
+    riveInstanceBottom.on(rive.EventType.RiveEvent, onRiveEventReceived);
 </script>
 </body>
 </html>
