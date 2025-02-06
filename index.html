@@ -132,7 +132,11 @@ canvas {
                 let currentIndex = 0;
                 const loadNextImage = () => {
                     if (currentIndex <= 173) {
-                        const imagePath = `/assets/images/demo-reel-thumbnail/Reel gif_${currentIndex.toString().padStart(5, "00000")}.png`;
+                        // Add repository name to path if using GitHub Pages
+                        const baseUrl = window.location.hostname === 'github.io' 
+                            ? '/website' // Replace 'your-repo-name' with your actual repository name
+                            : '';
+                        const imagePath = `${baseUrl}/assets/images/demo-reel-thumbnail/Reel gif_${currentIndex.toString().padStart(5, "00000")}.png`;
                         fetch(imagePath)
                             .then(res => {
                                 if (res.ok) return res.arrayBuffer();
