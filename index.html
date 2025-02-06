@@ -132,15 +132,29 @@ canvas {
                 let currentIndex = 0;
                 const loadNextImage = () => {
                     if (currentIndex <= 173) {
-                        // Add repository name to path if using GitHub Pages
-                        const baseUrl = window.location.hostname === 'github.io' 
-                            ? '/website' // Replace 'your-repo-name' with your actual repository name
-                            : '';
+                        // Log current location info for debugging
+                        console.log('Current location:', {
+                            hostname: window.location.hostname,
+                            pathname: window.location.pathname,
+                            origin: window.location.origin
+                        });
+
+                        // More specific GitHub Pages detection
+                        const isGitHubPages = window.location.hostname.includes('github.io');
+                        const baseUrl = isGitHubPages ? '/website' : '';
                         const imagePath = `${baseUrl}/assets/images/demo-reel-thumbnail/Reel gif_${currentIndex.toString().padStart(5, "00000")}.png`;
+                        
+                        // Log full URL being attempted
+                        const fullUrl = window.location.origin + imagePath;
+                        console.log('Attempting to load image from:', fullUrl);
+
                         fetch(imagePath)
                             .then(res => {
-                                if (res.ok) return res.arrayBuffer();
-                                throw new Error(`Failed to load image ${currentIndex}`);
+                                if (!res.ok) {
+                                    console.error(`Failed to load image ${currentIndex}. Status: ${res.status}, URL: ${fullUrl}`);
+                                    throw new Error(`Failed to load image ${currentIndex}`);
+                                }
+                                return res.arrayBuffer();
                             })
                             .then(arrayBuffer => rive.decodeImage(new Uint8Array(arrayBuffer)))
                             .then(image => {
