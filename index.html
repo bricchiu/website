@@ -4,11 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Brianna Chiu: Motion Designer</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;900&display=swap" rel="stylesheet">
 <style>
 body, html {
     margin: 0;
-    font-size: 0px;
     font-family: Arial, sans-serif;
     overflow-x: hidden; /* Prevent horizontal scrolling */
     overflow-y: auto;   /* Allow vertical scrolling */
@@ -16,17 +15,19 @@ body, html {
     flex-direction: column;
     align-items: center;
     background-color: #ECECEC;
+    padding-top: 0; /* Removed padding-top */
 }
 canvas {
-    width: 4000px; /* Set canvas width manually */
-    margin: 0 auto; /* Center the canvas horizontally */
-    display: block; /* Ensure proper centering */
+    width: 100vw; /* Changed from fixed 4000px to 100% viewport width */
+    max-width: 100%; /* Ensures canvas doesn't overflow */
+    margin: 0 auto;
+    display: block;
 }
 
 .video-container {
     position: relative;
-    width: min(1000px, 90vw);
-    height: min(635px, 57vw);
+    width: min(900px, 85vw); /* Reduced from 1000px, 90vw */
+    height: min(571px, 54vw); /* Reduced proportionally from 635px, 57vw */
     background-image: url('assets/images/demo-box.svg');
     background-size: contain;
     background-repeat: no-repeat;
@@ -36,295 +37,362 @@ canvas {
     align-items: center;
     padding: 40px 0;
     margin: 0 auto;
+    z-index: 2; /* Place in front of the title */
 }
 
 #mainVideo {
-    width: 85%; /* Reduced from 90% */
-    height: 85%; /* Reduced from 90% */
+    width: 85%;
+    height: 85%;
     object-fit: contain;
-    border-radius: 12px; /* Reduced from 20px */
+    border-radius: 12px;
     margin-top: 14px;
 }
 
 .section-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 900;
-    font-size: 100px;
+    font-size: 100px; /* Increased from 60px */
     color: #2E2E2E;
-    margin-bottom: -70px;
-    margin-left: -200px;
-    text-align: left;
-    -webkit-text-stroke: 3.5px #2E2E2E; /* Increased stroke for larger text */
+    text-align: right;
+    margin-bottom: -75px; /* Increased negative margin to push video up */
+    position: relative; /* Added to ensure proper layering */
+    z-index: 1; /* Place behind video container */
+}
+
+.section-title a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s ease-out, transform 2s ease-out;
+    display: inline-block;
+    transform-origin: center center;
+    font-weight: 700; /* Ensure the link inherits bold weight */
+}
+
+.section-title a:hover {
+    color: #983AB1;
+}
+
+.f-breadcrumb {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 0; /* Changed to only have vertical padding */
+    background-color: transparent;
+    z-index: 1000;
+}
+
+.f-breadcrumb.scrolled {
+    background-color: rgba(236, 236, 236, 0.95);
+    backdrop-filter: blur(5px);
+    transition: background-color 0.3s ease;
+}
+
+.f-breadcrumb-wrapper {
+    grid-column-gap: 8px;
+    grid-row-gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+    padding-left: 40px; /* Added left padding instead of margin */
+    margin-left: 0; /* Remove auto margin */
+    margin-right: 0; /* Remove auto margin */
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.nav-right {
+    display: flex;
+    gap: 40px;
+}
+
+.logo {
+    width: 30px;
+    height: 30px;
+}
+
+.f-breadcrumb-link {
+    color: #2E2E2E;
+    font-family: montserrat, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s, transform 0.3s ease-in-out;
+    display: inline-block;
+}
+
+.f-breadcrumb-link:hover {
+    color: #983AB1;
+    transform: scale(0.95);
+}
+
+.rive-wrapper {
+    position: relative;
+    width: 100%;
+    margin-top: 0; /* Ensure no top margin */
+    padding-top: 0; /* Ensure no top padding */
+}
+
+#riveCanvasTop, #riveCanvasBottom {
+    display: block;
+    width: 100vw;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
 }
 </style>
 <script src="https://unpkg.com/@rive-app/canvas@latest"></script>
 </head>
 <body>
-<canvas id="riveCanvasTop"></canvas>
+    <div class="f-breadcrumb">
+        <div class="f-breadcrumb-wrapper">
+            <div class="nav-left">
+                <img src="assets/images/Keyframe.svg" alt="Keyframe Logo" width="24" height="24">
+            </div>
+            <div class="nav-right">
+                <a href="pages/projects.html" class="f-breadcrumb-link">Projects</a>
+                <a href="/about" class="f-breadcrumb-link">About</a>
+                <a href="/contact" class="f-breadcrumb-link">Contact</a>
+            </div>
+        </div>
+    </div>
+    <div class="rive-wrapper">
+        <canvas id="riveCanvasTop"></canvas>
+    </div>
 
-<h2 class="section-title">PROJECTS</h2>
-<div class="video-container">
-    <iframe 
-        src="https://player.vimeo.com/video/535597247?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1"
-        width="90%"
-        height="80%"
-        frameborder="0"
-        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-        title="2021 Motion Graphic Reel"
-        style="border-radius: 12px; margin-top: 12px; margin-left: 4px; object-fit: cover;"
-    ></iframe>
-</div>
+    <h2 class="section-title">PROJECTS</h2>
+    <div class="video-container">
+        <iframe 
+            src="https://player.vimeo.com/video/535597247?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1"
+            width="90%"
+            height="80%"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+            title="2021 Motion Graphic Reel"
+            style="border-radius: 12px; margin-top: 12px; margin-left: 4px; object-fit: cover;"
+        ></iframe>
+    </div>
 
-<canvas id="riveCanvasBottom"></canvas>
+    <canvas id="riveCanvasBottom"></canvas>
 
-<script>
-    let riveInstanceTop, riveInstanceBottom, widthNumInput;
+    <script>
+        let riveInstanceTop, riveInstanceBottom, widthNumInput;
 
-    const preloadAllImages = async () => {
-        const totalImages = 174; // 0 to 173
-        const preloadedImages = [];
+        const preloadAllImages = async () => {
+            const totalImages = 174; // 0 to 173
+            const preloadedImages = [];
 
-        console.log("Starting to preload all images...");
-
-
-
-
-        // Update Rive input if available
-        if (widthNumInput) {
-            widthNumInput.value = browserWidth;
-        }
-
-        // Update canvas height based on breakpoint
-        if (browserWidth >= 1500) {
-            canvas.style.height = '2205px'; // wide height
-        } else {
-            canvas.style.height = '3054px'; // skinny height
-        }
-
-        // Ensure Rive redraws on canvas resize
-        if (riveInstance) {
-            riveInstance.resizeDrawingSurfaceToCanvas();
-        }
-    }
-
-    // function onRiveEventReceived(riveEvent) {
-    //     const eventData = riveEvent.data;
-    //     if (eventData.type === rive.RiveEventType.OpenUrl) {
-    //         console.log("Event triggered:", eventData.name);
-    //         console.log("Opening URL:", eventData.url);
-            
-    //         // Open the URL in a new tab
-    //         window.open(eventData.url, "_blank");
-
-
-    //     }
-    // }
-
-    function onRiveEventReceived(riveEvent) {
-    const eventData = riveEvent.data;
-
-    if (eventData.type === rive.RiveEventType.OpenUrl) {
-        console.log("Event triggered:", eventData.name);
-
-        switch (eventData.name) {
-            case "Email":
-                console.log("Opening Email");
-                window.open("https://mail.google.com/mail/u/0/?fs=1&to=bri.mograph@gmail.com&su=Hi%20Bri!&body=You%27re%20so%20cool%20and%20I%27m%20so%20cool.%20We%20should%20work%20together!&tf=cm", "_blank");
-                break;
-            case "Resume":
-                console.log("Opening Resume");
-                window.open("https://drive.google.com/file/d/1Un9slfnD87eTaGfLCBiulZFgyjUqh061/view?usp=drive_link", "_blank");
-                break;
-            case "Demo-Reel":
-                console.log("Navigating to Demo Reel");
-                window.location.href = "pages/demo-reel.html";
-                break;
-            case "contact":
-                console.log("Navigating to Contact");
-                window.location.href = "/contact.html";
-                break;
-            case "externalLink":
-                console.log("Opening External Link:", eventData.url);
-                window.open(eventData.url, "_blank");
-                break;
-            default:
-                console.log("Default action: Opening URL");
-                window.open(eventData.url, "_blank");
-        }
-    }
-}
+            console.log("Starting to preload all images...");
 
 
 
-    // Initialize Rive
-    riveInstanceTop = new rive.Rive({
-        src: 'layouts.riv',
-        canvas: document.getElementById('riveCanvasTop'),
-        autoplay: true,
-        artboard: 'Site', // Ensure this artboard name is correct
-        stateMachines: 'State Machine 1', // Ensure this state machine name is correct
-        assetLoader: (asset, bytes) => {
-            console.log("Asset loading:", {
-                name: asset.name,
-                fileExtension: asset.fileExtension,
-                cdnUuid: asset.cdnUuid,
-                isFont: asset.isFont,
-                isImage: asset.isImage,
-                bytes,
-            });
 
-            if (asset.isImage) {
-                if (asset.name === 'profile') {
-                    return false;
-                }
-                
-                // Load images in sequence
-                let currentIndex = 0;
-                const loadNextImage = () => {
-                    if (currentIndex <= 173) {
-                        // Use the absolute URL that we know works
-                        const formattedIndex = currentIndex.toString().padStart(5, "0");
-                        const filename = encodeURIComponent(`Reel gif_${formattedIndex}.png`);
-                        const imagePath = `https://bricchiu.github.io/website/assets/images/demo-reel-thumbnail/${filename}`;
-                        
-                        console.log('Attempting to load image from:', imagePath);
-
-                        fetch(imagePath)
-                            .then(res => {
-                                if (!res.ok) {
-                                    console.error(`Failed to load image ${currentIndex}. Status: ${res.status}, URL: ${imagePath}`);
-                                    throw new Error(`Failed to load image ${currentIndex}`);
-                                }
-                                return res.arrayBuffer();
-                            })
-                            .then(arrayBuffer => rive.decodeImage(new Uint8Array(arrayBuffer)))
-                            .then(image => {
-                                asset.setRenderImage(image);
-                                image.unref();
-                                currentIndex++;
-                                loadNextImage(); // Load next image only after current one is set
-                            })
-                            .catch(err => console.error(`Error with image ${currentIndex}:`, err));
-                    }
-                };
-                
-                loadNextImage();
-                return true;
+            // Update Rive input if available
+            if (widthNumInput) {
+                widthNumInput.value = browserWidth;
             }
-            return false;
-        },
-        onLoad: () => {
-            const inputs = riveInstanceTop.stateMachineInputs('State Machine 1'); // Ensure this state machine name is correct
-            widthNumInput = inputs.find(i => i.name === 'width num'); // Ensure this input name is correct
-            riveInstanceTop.resizeDrawingSurfaceToCanvas();
 
-            // Update canvas height on load and resize
-            updateCanvasHeight();
-            window.onresize = updateCanvasHeight;
-        }
-    });
-
-    // Second Rive instance using layoutsbottom.riv
-    riveInstanceBottom = new rive.Rive({
-        src: 'layoutsbottom.riv',
-        canvas: document.getElementById('riveCanvasBottom'),
-        autoplay: true,
-        artboard: 'Site',
-        stateMachines: 'State Machine 1',
-        assetLoader: (asset, bytes) => {
-            console.log("Asset loading:", {
-                name: asset.name,
-                fileExtension: asset.fileExtension,
-                cdnUuid: asset.cdnUuid,
-                isFont: asset.isFont,
-                isImage: asset.isImage,
-                bytes,
-            });
-
-            if (asset.isImage) {
-                if (asset.name === 'profile') {
-                    return false;
-                }
-                
-                // Load images in sequence
-                let currentIndex = 0;
-                const loadNextImage = () => {
-                    if (currentIndex <= 173) {
-                        // Use the absolute URL that we know works
-                        const formattedIndex = currentIndex.toString().padStart(5, "0");
-                        const filename = encodeURIComponent(`Reel gif_${formattedIndex}.png`);
-                        const imagePath = `https://bricchiu.github.io/website/assets/images/demo-reel-thumbnail/${filename}`;
-                        
-                        console.log('Attempting to load image from:', imagePath);
-
-                        fetch(imagePath)
-                            .then(res => {
-                                if (!res.ok) {
-                                    console.error(`Failed to load image ${currentIndex}. Status: ${res.status}, URL: ${imagePath}`);
-                                    throw new Error(`Failed to load image ${currentIndex}`);
-                                }
-                                return res.arrayBuffer();
-                            })
-                            .then(arrayBuffer => rive.decodeImage(new Uint8Array(arrayBuffer)))
-                            .then(image => {
-                                asset.setRenderImage(image);
-                                image.unref();
-                                currentIndex++;
-                                loadNextImage(); // Load next image only after current one is set
-                            })
-                            .catch(err => console.error(`Error with image ${currentIndex}:`, err));
-                    }
-                };
-                
-                loadNextImage();
-                return true;
+            // Update canvas height based on breakpoint
+            if (browserWidth >= 1017) {
+                canvas.style.height = '600px'; // wide height
+            } else {
+                canvas.style.height = '700px'; // skinny height
             }
-            return false;
-        },
-        onLoad: () => {
-            const inputs = riveInstanceBottom.stateMachineInputs('State Machine 1'); // Ensure this state machine name is correct
-            widthNumInput = inputs.find(i => i.name === 'width num'); // Ensure this input name is correct
-            riveInstanceBottom.resizeDrawingSurfaceToCanvas();
 
-            // Update canvas height on load and resize
-            updateCanvasHeight();
-            window.onresize = updateCanvasHeight;
-        }
-    });
-
-    // Update both canvases when the window resizes
-    function updateCanvasHeight() {
-        const browserWidth = window.innerWidth;
-        const topCanvas = document.getElementById('riveCanvasTop');
-        const bottomCanvas = document.getElementById('riveCanvasBottom');
-
-        if (browserWidth >= 1500) {
-            topCanvas.style.height = '1102px';    // Half of 2205px
-            bottomCanvas.style.height = '1102px';
-        } else {
-            topCanvas.style.height = '1527px';    // Half of 3054px
-            bottomCanvas.style.height = '1527px';
+            // Ensure Rive redraws on canvas resize
+            if (riveInstance) {
+                riveInstance.resizeDrawingSurfaceToCanvas();
+            }
         }
 
-        // Update width inputs for both instances
-        if (riveInstanceTop && riveInstanceBottom) {
-            const topInputs = riveInstanceTop.stateMachineInputs('State Machine 1');
-            const bottomInputs = riveInstanceBottom.stateMachineInputs('State Machine 1');
+        // function onRiveEventReceived(riveEvent) {
+        //     const eventData = riveEvent.data;
+        //     if (eventData.type === rive.RiveEventType.OpenUrl) {
+        //         console.log("Event triggered:", eventData.name);
+        //         console.log("Opening URL:", eventData.url);
             
-            const topWidthInput = topInputs.find(i => i.name === 'width num');
-            const bottomWidthInput = bottomInputs.find(i => i.name === 'width num');
-            
-            if (topWidthInput) topWidthInput.value = browserWidth;
-            if (bottomWidthInput) bottomWidthInput.value = browserWidth;
-            
-            riveInstanceTop.resizeDrawingSurfaceToCanvas();
-            riveInstanceBottom.resizeDrawingSurfaceToCanvas();
-        }
-    }
+        //         // Open the URL in a new tab
+        //         window.open(eventData.url, "_blank");
 
-    // Listen for Rive Events
-    riveInstanceTop.on(rive.EventType.RiveEvent, onRiveEventReceived);
-    riveInstanceBottom.on(rive.EventType.RiveEvent, onRiveEventReceived);
-</script>
+
+        //     }
+        // }
+
+        function onRiveEventReceived(riveEvent) {
+            const eventData = riveEvent.data;
+
+            if (eventData.type === rive.RiveEventType.OpenUrl) {
+                console.log("Event triggered:", eventData.name);
+
+                switch (eventData.name) {
+                    case "Email":
+                        window.open("https://mail.google.com/mail/u/0/?fs=1&to=bri.mograph@gmail.com&su=Hi%20Bri!&body=You%27re%20so%20cool%20and%20I%27m%20so%20cool.%20We%20should%20work%20together!&tf=cm", "_blank");
+                        break;
+                    case "Resume":
+                        window.open("https://drive.google.com/file/d/1Un9slfnD87eTaGfLCBiulZFgyjUqh061/view?usp=drive_link", "_blank");
+                        break;
+                    case "UI-UX":
+                        window.location.href = "pages/ui-ux.html";
+                        break;
+                    case "Videos":
+                        window.location.href = "pages/videos.html";
+                        break;           
+                    case "Characters":
+                        window.location.href = "pages/characters-and-rigs.html";
+                        break;
+                    case "Looping":
+                        window.location.href = "pages/looping-animations.html";
+                        break;
+                }
+            }
+        }
+
+
+
+        // Initialize Rive
+        riveInstanceTop = new rive.Rive({
+            src: 'layouts-top.riv',
+            canvas: document.getElementById('riveCanvasTop'),
+            autoplay: true,
+            artboard: 'Site',
+            stateMachines: 'State Machine 1',
+            onLoad: () => {
+                // Get state machine inputs
+                const inputs = riveInstanceTop.stateMachineInputs('State Machine 1');
+                const hoverInput = inputs.find(i => i.name === 'Hover'); // Make sure this matches your input name in Rive
+                widthNumInput = inputs.find(i => i.name === 'width num');
+
+                // Add hover listeners to canvas
+                const canvas = document.getElementById('riveCanvasTop');
+                canvas.addEventListener('mouseenter', () => {
+                    if (hoverInput) hoverInput.value = true;
+                });
+                canvas.addEventListener('mouseleave', () => {
+                    if (hoverInput) hoverInput.value = false;
+                });
+
+                riveInstanceTop.resizeDrawingSurfaceToCanvas();
+            }
+        });
+
+        // Second Rive instance using layouts-bot.riv
+        riveInstanceBottom = new rive.Rive({
+            src: 'layouts-bot.riv',
+            canvas: document.getElementById('riveCanvasBottom'),
+            autoplay: true,
+            artboard: 'Site',
+            stateMachines: 'State Machine 1',
+            assetLoader: (asset, bytes) => {
+                console.log("Asset loading:", {
+                    name: asset.name,
+                    fileExtension: asset.fileExtension,
+                    cdnUuid: asset.cdnUuid,
+                    isFont: asset.isFont,
+                    isImage: asset.isImage,
+                    bytes,
+                });
+
+                if (asset.isImage) {
+                    if (asset.name === 'profile') {
+                        return false;
+                    }
+                    
+                    // Load images in sequence
+                    let currentIndex = 0;
+                    const loadNextImage = () => {
+                        if (currentIndex <= 173) {
+                            // Use the absolute URL that we know works
+                            const formattedIndex = currentIndex.toString().padStart(5, "0");
+                            const filename = encodeURIComponent(`Reel gif_${formattedIndex}.png`);
+                            const imagePath = `https://bricchiu.github.io/website/assets/images/demo-reel-thumbnail/${filename}`;
+                            
+                            console.log('Attempting to load image from:', imagePath);
+
+                            fetch(imagePath)
+                                .then(res => {
+                                    if (!res.ok) {
+                                        console.error(`Failed to load image ${currentIndex}. Status: ${res.status}, URL: ${imagePath}`);
+                                        throw new Error(`Failed to load image ${currentIndex}`);
+                                    }
+                                    return res.arrayBuffer();
+                                })
+                                .then(arrayBuffer => rive.decodeImage(new Uint8Array(arrayBuffer)))
+                                .then(image => {
+                                    asset.setRenderImage(image);
+                                    image.unref();
+                                    currentIndex++;
+                                    loadNextImage(); // Load next image only after current one is set
+                                })
+                                .catch(err => console.error(`Error with image ${currentIndex}:`, err));
+                        }
+                    };
+                    
+                    loadNextImage();
+                    return true;
+                }
+                return false;
+            },
+            onLoad: () => {
+                const inputs = riveInstanceBottom.stateMachineInputs('State Machine 1');
+                widthNumInput = inputs.find(i => i.name === 'width num');
+                riveInstanceBottom.resizeDrawingSurfaceToCanvas();
+
+                // Update canvas height on load and resize
+                updateCanvasHeight();
+                window.onresize = updateCanvasHeight;
+            }
+        });
+
+        // Update both canvases when the window resizes
+        function updateCanvasHeight() {
+            const browserWidth = window.innerWidth;
+            const topCanvas = document.getElementById('riveCanvasTop');
+            const bottomCanvas = document.getElementById('riveCanvasBottom');
+
+            if (browserWidth >= 1017) {
+                topCanvas.style.height = '600px';    
+                bottomCanvas.style.height = '1570px';
+            } else {
+                topCanvas.style.height = '700px';    // Half of 3054px
+                bottomCanvas.style.height = '1820px';
+            }
+
+
+    
+            // Update width inputs for both instances
+            if (riveInstanceTop && riveInstanceBottom) {
+                const topInputs = riveInstanceTop.stateMachineInputs('State Machine 1');
+                const bottomInputs = riveInstanceBottom.stateMachineInputs('State Machine 1');
+                
+                const topWidthInput = topInputs.find(i => i.name === 'width num');
+                const bottomWidthInput = bottomInputs.find(i => i.name === 'width num');
+                
+                if (topWidthInput) topWidthInput.value = browserWidth;
+                if (bottomWidthInput) bottomWidthInput.value = browserWidth;
+                
+                riveInstanceTop.resizeDrawingSurfaceToCanvas();
+                riveInstanceBottom.resizeDrawingSurfaceToCanvas();
+            }
+        }
+
+        // Listen for Rive Events
+        riveInstanceTop.on(rive.EventType.RiveEvent, onRiveEventReceived);
+        riveInstanceBottom.on(rive.EventType.RiveEvent, onRiveEventReceived);
+
+        // Update scroll listener to use new class name
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.f-breadcrumb');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
 </body>
 </html>

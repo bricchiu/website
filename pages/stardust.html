@@ -118,7 +118,7 @@
           on an epic journey through inner and outer universes to remember the
           miracle it is to be alive. Written by Garrett Brill & Illustrated by
           Daniel Fleck! </p>
-          <p class="f-paragraph-large">With the support of an incredible community, the creators launched a Kickstarter campaign to bring this story to life through animation. After reaching their goal, they entrusted me with the task of translating the book’s magic into motion, helping to visually capture the wonder and adventure of Naledi’s journey.
+          <p class="f-paragraph-large">With the support of an incredible community, the creators launched a Kickstarter campaign to bring this story to life through animation. After reaching their goal, they entrusted me with the task of translating the book's magic into motion, helping to visually capture the wonder and adventure of Naledi's journey.
         </p>
       </div>
     </div>
@@ -127,4 +127,41 @@
   <div class="mr-paul-container">
     <img class="mr-paul" src="/assets/images/celery.gif" alt="" />
   </div>
+
+  <style>
+  @keyframes fadeInUp {
+      from {
+          opacity: 0;
+          transform: translateY(20px);
+      }
+      to {
+          opacity: 1;
+          transform: translateY(0);
+      }
+  }
+
+  .f-breadcrumb {
+      animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .container---gapped {
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out forwards;
+      animation-delay: 0.2s;
+  }
+
+  .iframe-container {
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out forwards;
+      animation-delay: 0.4s;
+  }
+
+  .f-heading-detail-small,
+  .f-h3-heading,
+  .f-paragraph-large {
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out forwards;
+      animation-delay: 0.6s;
+  }
+  </style>
 </body>

@@ -1,5 +1,7 @@
 <head>
   <link rel="stylesheet" type="text/css" href="style.css" />
+  <!-- Add Rive runtime -->
+  <script src="https://unpkg.com/@rive-app/canvas@2.7.0"></script>
 </head>
 
 <body>
@@ -96,35 +98,104 @@
     </div>
   </div>
   <div class="container---gapped">
-    <div class="iframe-container">
-      <iframe
-        class="responsive-iframe"
-        src="//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fwww.youtube.com%2Fembed%2Ft_WrqCBFsj4%3Fstart%3D3%26feature%3Doembed%26start%3D3&amp;display_name=YouTube&amp;url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3Dt_WrqCBFsj4&amp;image=https%3A%2F%2Fi.ytimg.com%2Fvi%2Ft_WrqCBFsj4%2Fhqdefault.jpg&amp;type=text%2Fhtml&amp;schema=youtube"
-        width="940"
-        height="528"
-        scrolling="no"
-        allowfullscreen=""
-        title="Stardust: A Journey to Remember"
-      ></iframe>
-    </div>
-    <div>
-      <div class="f-heading-detail-small">ANIMATION & VIDEO EDITING</div>
-      <div>
-        <h3 class="f-h3-heading">STARDUST:&nbsp;A&nbsp;JOURNEY TO REMEMBER</h3>
+    <!-- First Rive animation -->
+    <div class="animation-section">
+      <canvas id="reaction-canvas" width="940" height="528"></canvas>
+      <div class="caption">
+        <small><i>Illustrated by Michelle Vilavanh | © StrongMind 2024</i></small>></div>
       </div>
-      <div>
-        <p class="f-paragraph-large">
-          A poetic and enchanting story that follows an adventurer named Naledi
-          on an epic journey through inner and outer universes to remember the
-          miracle it is to be alive. Written by Garrett Brill & Illustrated by
-          Daniel Fleck! </p>
-          <p class="f-paragraph-large">With the support of an incredible community, the creators launched a Kickstarter campaign to bring this story to life through animation. After reaching their goal, they entrusted me with the task of translating the book’s magic into motion, helping to visually capture the wonder and adventure of Naledi’s journey.
-        </p>
+    </div>
+
+    <!-- Second Rive animation -->
+    <div class="animation-section">
+      <canvas id="chatbot-canvas" width="940" height="528"></canvas>
+      <div class="caption">
+        <div class="f-heading-detail-small">CHATBOT</div>
+      </div>
+    </div>
+
+    <!-- Add more Rive animations here -->
+    <div class="animation-section">
+      <canvas id="new-animation-canvas" width="940" height="528"></canvas>
+      <div class="caption">
+        <div class="f-heading-detail-small">NEW ANIMATION</div>
       </div>
     </div>
   </div>
 
-  <div class="mr-paul-container">
-    <img class="mr-paul" src="/assets/images/celery.gif" alt="" />
-  </div>
+  <script>
+    // Initialize Reaction Emojis animation
+    const reactionCanvas = document.getElementById('reaction-canvas');
+    new rive.Rive({
+      src: '/assets/rive-files/ReactionEmoji_01.riv',
+      canvas: reactionCanvas,
+      autoplay: true,
+      stateMachines: 'State Machine 1',
+      layout: new rive.Layout({
+        fit: rive.Fit.Contain,
+        alignment: rive.Alignment.Center,
+      }),
+    });
+
+    // Initialize Chatbot animation
+    const chatbotCanvas = document.getElementById('chatbot-canvas');
+    new rive.Rive({
+      src: '/assets/rive-files/chatbot_01_(demo).riv',
+      canvas: chatbotCanvas,
+      autoplay: true,
+      stateMachines: 'chatbot-sm',
+      layout: new rive.Layout({
+        fit: rive.Fit.Contain,
+        alignment: rive.Alignment.Center,
+      }),
+    });
+
+    // Initialize New Animation
+    const actionplanCanvas = document.getElementById('actionplan-canvas');
+    new rive.Rive({
+      src: '/assets/rive-files/action_plan_icons_-_demo.riv',
+      canvas: actionplanCanvas,
+      autoplay: true,
+      stateMachines: 'State Machine 1',
+      layout: new rive.Layout({
+        fit: rive.Fit.Contain,
+        alignment: rive.Alignment.Center,
+      }),
+    });
+
+    const 404Canvas = document.getElementById('404-canvas');
+    new rive.Rive({
+      src: '/assets/rive-files/404_page_error.riv',
+      canvas: 404Canvas,
+      autoplay: true,
+      stateMachines: '404_page_error-sm',
+      layout: new rive.Layout({
+        fit: rive.Fit.Contain,
+        alignment: rive.Alignment.Center,
+      }),
+    });
+  </script>
+
+  <style>
+    #reaction-canvas, #chatbot-canvas, #actionplan-canvas, .rive-canvas {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+    }
+    
+    .caption {
+      text-align: center;
+      margin-top: 5px;
+      margin-bottom: 40px;
+    }
+
+    .f-heading-detail-small {
+      color: #666666;
+      font-weight: 500;
+    }
+
+    .animation-section {
+      margin-bottom: 80px;  /* Space between animation sections */
+    }
+  </style>
 </body>
