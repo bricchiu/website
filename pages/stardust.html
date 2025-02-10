@@ -110,7 +110,7 @@
     <div>
       <div class="f-heading-detail-small">ANIMATION & VIDEO EDITING</div>
       <div>
-        <h3 class="f-h3-heading">STARDUST:&nbsp;A&nbsp;JOURNEY TO REMEMBER</h3>
+        <p class="h2-stardust">STARDUST:&nbsp;A&nbsp;JOURNEY TO REMEMBER</p>
       </div>
       <div>
         <p class="f-paragraph-large">
@@ -118,7 +118,12 @@
           on an epic journey through inner and outer universes to remember the
           miracle it is to be alive. Written by Garrett Brill & Illustrated by
           Daniel Fleck! </p>
-          <p class="f-paragraph-large">With the support of an incredible community, the creators launched a Kickstarter campaign to bring this story to life through animation. After reaching their goal, they entrusted me with the task of translating the book's magic into motion, helping to visually capture the wonder and adventure of Naledi's journey.
+          <p class="f-paragraph-large">With the support of an incredible 
+            community, the creators launched a Kickstarter campaign to bring 
+            this story to life through animation. 
+            After reaching their goal, they entrusted me with the task of 
+            translating the book's magic into motion! 
+            <a href="https://www.kickstarter.com/projects/glink/stardust-a-journey-to-remember/description" target="_blank" class="button-link">View the kickstarter here!</a>
         </p>
       </div>
     </div>
@@ -157,11 +162,39 @@
   }
 
   .f-heading-detail-small,
-  .f-h3-heading,
-  .f-paragraph-large {
+  .h2-stardust {
       opacity: 0;
       animation: fadeInUp 0.6s ease-out forwards;
-      animation-delay: 0.6s;
+      animation-delay: 0.5s;
+  }
+
+  .h2-stardust {
+      font-size: 50px;
+      color: #983AB1;
+      font-weight: 800;
+      line-height: 1;
+      margin-top: 2px; 
+      margin-bottom: 15px;
+  }
+
+  .f-paragraph-large {
+      margin-top: 12px;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out forwards;
+      animation-delay: 0.6s; 
+  }
+
+  .button-link {
+      display: inline-block;
+      margin-top: 15px; 
+      text-decoration: none; /* Remove underline */
+      border-radius: 10px; /* Rounded corners */
+      font-weight: 40px; /* Bold text */
+  }
+
+  .button-link:hover {
+      color: #983AB1;
+
   }
   </style>
 </body>
