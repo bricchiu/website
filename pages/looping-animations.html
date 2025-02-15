@@ -1,5 +1,59 @@
 <head>
   <link rel="stylesheet" type="text/css" href="style.css" />
+  <style>
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .main-text {
+        opacity: 0;
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .main-text-container {
+        opacity: 0;
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .image-container {
+        opacity: 0;
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .caption {
+        opacity: 0;
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .new-section {
+        opacity: 0;
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    /* Staggered delays for each section */
+    .main-text-container {
+        animation-delay: 0.2s;
+    }
+
+    .image-container {
+        animation-delay: 0.4s;
+    }
+
+    .caption {
+        animation-delay: 0.6s;
+    }
+
+    .new-section {
+        animation-delay: 0.8s;
+    }
+  </style>
 </head>
 
 <body>
@@ -149,7 +203,6 @@
 </div>
 
 
-
   <div class="container---gapped">
     <div class="iframe-container">
       <iframe src="https://player.vimeo.com/video/1054657558?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&autoplay=1&loop=1&muted=1" 
@@ -189,6 +242,31 @@
         </div>
       </div>
     </div>
+
+
+
+    <!--
+    <div class="container---gapped">
+      <div class="iframe-container-2" style="margin-top:300px;">
+        <iframe
+          class="responsive-iframe"
+          src="https://player.vimeo.com/video/448339521?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+          width="940"
+          height="528"
+          scrolling="no"
+          allowfullscreen=""
+          title="OTGW Loop"
+        ></iframe>
+      </div>
+      <div>
+        <div class="f-heading-detail-small" style="text-align: center;"><center>OVER THE GARDEN WALL LOOP</center></div>
+        <div class="caption" style="text-align: center;">
+          <p><small>A looping animation I made for halloween with characters from <i>Over the Garden Wall!</i> 
+            <br>I made this way back before I understood how to rig characters and animate them, which is why they look a bit stiff and janky. I used to only animate characters using paths and shape layers in AE which in hindsight is kind of crazy. I still had fun and enjoyed making it, though!</a></small></p>
+        </div>
+      </div>
+    </div>
+    -->
   <style>
   @keyframes fadeInUp {
       from {

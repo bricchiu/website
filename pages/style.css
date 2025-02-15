@@ -38,6 +38,23 @@ iframe {
     box-shadow: 0 0 0 5px #2E2E2E; /* Second stroke (outer border) */
 }
 
+.iframe-container-1 {
+    position: relative;
+    overflow: hidden;
+    align-items: center;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+.iframe-container-2 {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 56.25%;
+    border-radius: 20px; /* Adjust for rounded corners */
+    border: 7px solid #ECECEC; /* First stroke (inner border) */
+    box-shadow: 0 0 0 5px #2E2E2E; /* Second stroke (outer border) */
+}
+
 .responsive-iframe {
     position: absolute;
     top: 0;
