@@ -97,7 +97,7 @@ canvas {
     display: flex;
     padding-left: 40px; /* Added left padding instead of margin */
     margin-left: 0; /* Remove auto margin */
-    margin-right: 0; /* Remove auto margin */
+    margin-right: 0; 
 }
 
 .nav-left {
@@ -156,8 +156,8 @@ canvas {
             </div>
             <div class="nav-right">
                 <a href="pages/projects.html" class="f-breadcrumb-link">Projects</a>
-                <a href="/about" class="f-breadcrumb-link">About</a>
-                <a href="/contact" class="f-breadcrumb-link">Contact</a>
+                <a href="javascript:void(0);" class="f-breadcrumb-link" onclick="scrollToMiddle()">About</a>
+                <a href="https://mail.google.com/mail/u/0/?fs=1&to=bri.mograph@gmail.com&su=Hi%20Bri!&body=You%27re%20so%20cool%20and%20I%27m%20so%20cool.%20We%20should%20work%20together!&tf=cm" class="f-breadcrumb-link">Contact</a>
             </div>
         </div>
     </div>
@@ -178,7 +178,7 @@ canvas {
         ></iframe>
     </div>
 
-    <canvas id="riveCanvasBottom"></canvas>
+    <canvas id="riveCanvasBottom" class="bottom-canvas"></canvas>
 
     <script>
         let riveInstanceTop, riveInstanceBottom, widthNumInput;
@@ -209,19 +209,6 @@ canvas {
                 riveInstance.resizeDrawingSurfaceToCanvas();
             }
         }
-
-        // function onRiveEventReceived(riveEvent) {
-        //     const eventData = riveEvent.data;
-        //     if (eventData.type === rive.RiveEventType.OpenUrl) {
-        //         console.log("Event triggered:", eventData.name);
-        //         console.log("Opening URL:", eventData.url);
-            
-        //         // Open the URL in a new tab
-        //         window.open(eventData.url, "_blank");
-
-
-        //     }
-        // }
 
         function onRiveEventReceived(riveEvent) {
             const eventData = riveEvent.data;
@@ -402,6 +389,15 @@ canvas {
                 nav.classList.remove('scrolled');
             }
         });
+
+        function scrollToMiddle() {
+            const canvas = document.getElementById('riveCanvasBottom');
+            const middlePosition = canvas.offsetTop + (canvas.offsetHeight / 2) - (window.innerHeight / 2);
+            window.scrollTo({
+                top: middlePosition,
+                behavior: 'smooth' // Smooth scrolling
+            });
+        }
     </script>
 </body>
 </html>
