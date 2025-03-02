@@ -146,10 +146,49 @@ canvas {
     margin: 0;
     padding: 0;
 }
+
+.mobile-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ECECEC;
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.mobile-message {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    color: #2E2E2E;
+    max-width: 80%;
+    line-height: 1.5;
+}
+
+/* Show overlay on mobile devices */
+@media screen and (max-width: 768px) {
+    .mobile-overlay {
+        display: flex;
+    }
+    
+    body > *:not(.mobile-overlay) {
+        display: none !important;
+    }
+}
 </style>
 <script src="https://unpkg.com/@rive-app/canvas@latest"></script>
 </head>
 <body>
+    <div class="mobile-overlay">
+        <div class="mobile-message">
+            Sorry! This website only works on desktop devices for the time being.
+        </div>
+    </div>
     <div class="f-breadcrumb">
         <div class="f-breadcrumb-wrapper">
             <div class="nav-left">
@@ -169,12 +208,12 @@ canvas {
     <h2 class="section-title">PROJECTS</h2>
     <div class="video-container">
         <iframe 
-            src="https://player.vimeo.com/video/535597247?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1"
+            src="https://player.vimeo.com/video/1061631937?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1"
             width="90%"
             height="80%"
             frameborder="0"
             allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-            title="2021 Motion Graphic Reel"
+            title="Motion Design Reel"
             style="border-radius: 12px; margin-top: 12px; margin-left: 4px; object-fit: cover;"
         ></iframe>
     </div>
