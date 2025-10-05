@@ -2,7 +2,6 @@
   <link rel="stylesheet" type="text/css" href="style.css" />
   <link rel="icon" href="../assets/images/Keyframe.svg" type="image/x-icon">
 </head>
-
 <body>
   <div class="w-layout-blockcontainer container-2 w-container">
     <div class="f-breadcrumb">
@@ -98,15 +97,15 @@
   </div>
   <div class="container---gapped">
     <div class="iframe-container">
-      <iframe
+      <video
         class="responsive-iframe"
-        src="https://player.vimeo.com/video/533801958?h=365a0b7284&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+        controls
         width="940"
         height="528"
-        scrolling="no"
-        allowfullscreen=""
-        title="Course Title Slates"
-      ></iframe>
+      >
+        <source src="../assets/videos/sm-slates.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
     </div>
     <div>
       <div class="f-heading-detail-small">ANIMATION & VIDEO EDITING</div>
@@ -122,11 +121,9 @@
       </div>
     </div>
   </div>
-
   <div class="mr-paul-container">
     <img class="mr-paul" src="/assets/images/celery.gif" alt="" />
   </div>
-
   <style>
   @keyframes fadeInUp {
       from {
@@ -138,30 +135,25 @@
           transform: translateY(0);
       }
   }
-
   .f-breadcrumb {
       animation: fadeInUp 0.6s ease-out forwards;
   }
-
   .container---gapped {
       opacity: 0;
       animation: fadeInUp 0.6s ease-out forwards;
       animation-delay: 0.2s;
   }
-
   .iframe-container {
       opacity: 0;
       animation: fadeInUp 0.6s ease-out forwards;
       animation-delay: 0.4s;
   }
-
   .f-heading-detail-small,
   .h2-stardust {
       opacity: 0;
       animation: fadeInUp 0.6s ease-out forwards;
       animation-delay: 0.5s;
   }
-
   .h2-stardust {
       font-size: 50px;
       color: #983AB1;
@@ -170,14 +162,12 @@
       margin-top: 2px; 
       margin-bottom: 15px;
   }
-
   .f-paragraph-large {
       margin-top: 12px;
       opacity: 0;
       animation: fadeInUp 0.6s ease-out forwards;
       animation-delay: 0.6s; 
   }
-
   .button-link {
       display: inline-block;
       margin-top: 15px; 
@@ -185,10 +175,8 @@
       border-radius: 10px; 
       font-weight: 40px; 
   }
-
   .button-link:hover {
       color: #983AB1;
-
   }
   </style>
 </body>

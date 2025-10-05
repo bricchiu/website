@@ -1,8 +1,6 @@
 <head>
   <link rel="stylesheet" type="text/css" href="style.css" />
   <link rel="icon" href="../assets/images/Keyframe.svg" type="image/x-icon">
-  <!-- Add Rive runtime -->
-  <script src="https://unpkg.com/@rive-app/canvas@2.7.0"></script>
   <style>
     @keyframes fadeInUp {
         from {
@@ -15,63 +13,38 @@
         }
     }
 
-    .main-text {
+    .project-item {
         opacity: 0;
         animation: fadeInUp 0.6s ease-out forwards;
     }
 
-    .main-text-container {
-        opacity: 0;
-        animation: fadeInUp 0.6s ease-out forwards;
-    }
-
-    .animation-section {
-        opacity: 0;
-        animation: fadeInUp 0.6s ease-out forwards;
-    }
-
-    /* Staggered delays for each section */
-    .main-text-container {
+    /* Staggered delays for each project item */
+    .project-item:nth-child(1) {
         animation-delay: 0.2s;
     }
 
-    .animation-section:nth-child(1) {
+    .project-item:nth-child(2) {
         animation-delay: 0.4s;
     }
 
-    .animation-section:nth-child(2) {
+    .project-item:nth-child(3) {
         animation-delay: 0.6s;
     }
 
-    .animation-section:nth-child(3) {
+    .project-item:nth-child(4) {
         animation-delay: 0.8s;
     }
 
-    .animation-section:nth-child(4) {
+    .project-item:nth-child(5) {
         animation-delay: 1.0s;
     }
 
-    .animation-section:nth-child(5) {
+    .project-item:nth-child(6) {
         animation-delay: 1.2s;
-    }
-
-    .animation-section:nth-child(6) {
-        animation-delay: 1.4s;
-    }
-
-    .animation-section:nth-child(7) {
-        animation-delay: 1.6s;
-    }
-
-    .animation-section:nth-child(8) {
-        animation-delay: 1.8s;
-    }
-
-    .animation-section:nth-child(9) {
-        animation-delay: 2.0s;
     }
   </style>
 </head>
+
 
 <body>
   <div class="w-layout-blockcontainer container-2 w-container">
@@ -126,397 +99,42 @@
           </svg>
         </div>
         <a href="../pages/ui-ux.html" class="f-breadcrumb-link w-inline-block"
-          ><div class="breadcrumb">UI-UX</div></a
+          ><div class="breadcrumb">UI/UX</div></a
         >
       </div>
     </div>
   </div>
-  <div class="main-text-container">
-    <div class="main-text">
-      <h1><center>UI/UX ANIMATIONS</center></h1>
-      <p><center>Here are some of the recent animations I've made for web, 
-        all created using Rive. I've learned a lot about the interactive world from Rive, 
-        from both a designer and developer's perspective 
-        (especially after creating this site) and hope to learn more!</p>
 
-      <i><p>© StrongMind 2021 - 2025</p></i>
-      
-      </center></p>
-    </div>
-  </div>
   
-  <div class="container---gapped">
-    <!-- Rive animations -->
-    <div class="animation-section">
-      <canvas id="animation-canvas-1"></canvas>
-      <div class="caption-1">
-        <small><i>Illustrated by Michelle Vilavanh</i></small>
-      </div>
+
+  <!-- GALLERY -->
+  <div class="project-gallery">
+
+    <!-- COURSE TITLE SLATES VIDEO -->
+    <a href="https://www.behance.net/gallery/235944619/Earth-Rangers-Quest-A-CYOA-Game-Made-in-Rive" class="project-item">
+        <img src="../assets/images/thumbnails/er-thumbnail.jpg" class="project-img static-img" alt="Course Title Slates">
+        <img src="../assets/images/thumbnails/animated-thumbnails/er-thumbnail.gif" class="project-img gif-img" alt="Course Title Slates">
+        <div class="project-info">
+            <span>Ranger Quest: Interactive Learning Adventure</span>
+        </div>
+
+         <!-- STARDUST: READ ALONG -->
+  <a href="https://www.behance.net/gallery/234364937/Meow-sic-with-Olie" class="project-item">
+    <img src="../assets/images/thumbnails/cat-thumbnail.jpg" class="project-img static-img" alt="Stardust: Read Along">
+    <img src="../assets/images/thumbnails/animated-thumbnails/cat-thumbnail.gif" class="project-img gif-img" alt="Stardust: Read Along">
+    <div class="project-info">
+        <span>Meow-sic with Olie</span>
     </div>
+     </a>
 
-    <div class="animation-section">
-      <canvas id="animation-canvas-2"></canvas>
-      <div class="caption">
-        <small><i><a href="https://rive.app/s/IqgJV_0Ex0WL9LwS_fA9Xw/">Demo Here</a>
-          Illustrated by Michelle Vilavanh</i></small>
+     <!-- PRIMAVERA PROMO -->
+     <a href="web-animations.html" class="project-item">
+      <img src="../assets/images/thumbnails/uiux-thumbnail.png" class="project-img static-img" alt="Primavera Promo">
+      <img src="../assets/images/thumbnails/animated-thumbnails/uiux-thumbnail.gif" class="project-img gif-img" alt="Primavera Promo">
+      <div class="project-info">
+        <span><center>WEB ANIMATIONS</center></span>
       </div>
-    </div>
-
-    <div class="animation-section">
-      <canvas id="animation-canvas-3"></canvas>
-      <div class="caption">
-      </div>
-    </div>
-
-    <div class="animation-section">
-      <canvas id="animation-canvas-4"></canvas>
-      <div class="caption">
-      </div>
-    </div>
-
-    <div class="animation-section">
-      <canvas id="animation-canvas-5"></canvas>
-      <div class="caption">
-        <small><i><a href="https://rive.app/s/Y6fUDTIL20KgbExwG_NTQw/">Demo Here</a>
-          Illustrated by Michelle Vilavanh</i></small>
-      </div>
-    </div>
-
-    <div class="animation-section">
-      <canvas id="animation-canvas-6"></canvas>
-      <div class="caption">
-        <div class="f-heading-detail-small">LOADER ANIMATION</div>
-      </div>
-    </div>
-
-    <div class="animation-section">
-      <canvas id="animation-canvas-7"></canvas>
-      <div class="caption">
-        <div class="f-heading-detail-small">404 PAGE ERROR ANIMATION</div>
-      </div>
-    </div>
-
-    <div class="animation-section">
-      <canvas id="animation-canvas-8"></canvas>
-      <div class="caption">
-        <div class="f-heading-detail-small">500 PAGE ERROR ANIMATION</div>
-      </div>
-    </div>
-
-    <div class="animation-section">
-      <canvas id="animation-canvas-9"></canvas>
-      <div class="caption">
-        <div class="f-heading-detail-small">504 PAGE ERROR ANIMATION</div>
-      </div>
-    </div>
-  </div>
-
-  <style>
-    .main-text h1 {
-      margin-bottom: -5px;
-    }
-
-    .main-text-container {
-      align-items: center;
-      justify-content: center; 
-      margin: auto; 
-      max-width: 600px;
-      margin-top: 50px;
-    }
-
-    .caption-1 {
-      text-align: center;
-      margin-top: -35px; 
-    }
+       </a>
     
-    .caption {
-      text-align: center;
-      margin-top: -80px;
-    }
 
-    .f-heading-detail-small {
-      color: #666666;
-      font-weight: 500;
-    }
-
-    .animation-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    #animation-canvas-1 {
-      width: 600px;
-      height: 480px;
-    }
-
-    #animation-canvas-2 {
-      width: 300px;
-      height: 460px;
-    }
-
-    #animation-canvas-3 {
-      width: 600px;
-      height: 360px;
-    }
-
-    #animation-canvas-4 {
-      width: 600px;
-      height: 360px;
-    }
-
-    #animation-canvas-5 {
-      width: 590px;
-      height: 790px;
-      margin-bottom: -60px;
-    }
     
-    #animation-canvas-6 {
-      width: 600px;
-      height: 300px;
-      margin-top: 100px;
-    } 
-
-    #animation-canvas-7 {
-      width: 600px;
-      height: 360px;
-      margin-bottom: 20px;
-    } 
-
-    #animation-canvas-8 {
-      width: 600px;
-      height: 360px;
-      margin-bottom: 60px;
-    } 
-
-    #animation-canvas-9 {
-      width: 600px;
-      height: 360px;
-      margin-bottom: 10px;
-    } 
-  </style>
-
-  <script>
-    // Set the canvas size for high DPI displays
-
-    // Function to resize the drawing surface to match the canvas
-    function onRiveEventReceived(riveEvent) {
-            const eventData = riveEvent.data;
-
-            if (eventData.type === rive.RiveEventType.OpenUrl) {
-                console.log("Event triggered:", eventData.name);
-                // Open the URL in a new tab
-                window.open(eventData.url, '_blank'); // Ensure eventData.url contains the correct URL
-            }
-    } 
-
-    function resizeDrawingSurfaceToCanvas(canvas) {
-      const scale = window.devicePixelRatio; // Get the device pixel ratio
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
-      canvas.width = width * scale;
-      canvas.height = height * scale;
-      const context = canvas.getContext('2d');
-    }
-
-    // Initialize Animation 1
-    const animation1 = {
-      id: 'animation-canvas-1',
-      src: '../assets/rive-files/ReactionEmojis_01.riv',
-      stateMachine: 'State Machine 1'
-    };
-
-    const canvas1 = document.getElementById(animation1.id);
-    resizeDrawingSurfaceToCanvas(canvas1);
-
-    const riveAnimation1 = new rive.Rive({
-      src: animation1.src,
-      canvas: canvas1,
-      autoplay: true,
-      stateMachines: animation1.stateMachine,
-      layout: new rive.Layout({
-        fit: rive.Fit.Contain, // Ensure the animation fits within the canvas
-        alignment: rive.Alignment.Center, // Center the animation
-      }),
-    });
-
-    // Initialize Animation 2 (chatbot_01_(demo))
-    const animation2 = {
-      id: 'animation-canvas-2',
-      src: '../assets/rive-files/chatbot_01_(demo).riv',
-      stateMachine: 'chatbot-sm'
-    };
-
-    const canvas2 = document.getElementById(animation2.id);
-    resizeDrawingSurfaceToCanvas(canvas2);
-
-    const riveAnimation2 = new rive.Rive({
-      src: animation2.src,
-      canvas: canvas2,
-      autoplay: true,
-      stateMachines: animation2.stateMachine,
-      layout: new rive.Layout({
-        fit: rive.Fit.Contain,
-        alignment: rive.Alignment.Center,
-      }),
-    });
-
-    // Initialize Animation 3 (action_plan_icons_-_demo)
-    const animation3 = {
-      id: 'animation-canvas-3',
-      src: '../assets/rive-files/action_plan_icons_-_demo.riv',
-      stateMachine: 'action-plan'
-    };
-
-    const canvas3 = document.getElementById(animation3.id);
-    resizeDrawingSurfaceToCanvas(canvas3);
-
-    const riveAnimation3 = new rive.Rive({
-      src: animation3.src,
-      canvas: canvas3,
-      autoplay: true,
-      stateMachines: animation3.stateMachine, 
-      layout: new rive.Layout({
-        fit: rive.Fit.Contain,
-        alignment: rive.Alignment.Center,
-      }),
-    }); 
-    // Initialize Animation 4 (left_nav_icons_all)
-    const animation4 = {
-      id: 'animation-canvas-4',
-      src: '../assets/rive-files/left_nav_icons_all.riv',
-      stateMachine: 'State Machine 1'
-    };    
-
-    const canvas4 = document.getElementById(animation4.id);
-    resizeDrawingSurfaceToCanvas(canvas4);
-
-    const riveAnimation4 = new rive.Rive({
-      src: animation4.src,
-      canvas: canvas4,
-      autoplay: true,
-      stateMachines: animation4.stateMachine,
-      layout: new rive.Layout({
-        fit: rive.Fit.Contain,
-        alignment: rive.Alignment.Center,
-      }),
-    });
-
-    // Initialize Animation 5 (avatar_creator_3_-_demo)
-    const animation5 = {
-      id: 'animation-canvas-5',
-      src: '../assets/rive-files/avatar_creator_3_-_demo.riv',
-      stateMachine: 'avatar-sm'
-    }; 
-
-    const canvas5 = document.getElementById(animation5.id);
-    resizeDrawingSurfaceToCanvas(canvas5);
-
-    const riveAnimation5 = new rive.Rive({
-      src: animation5.src,
-      canvas: canvas5,
-      autoplay: true,
-      stateMachines: animation5.stateMachine,
-      layout: new rive.Layout({
-        fit: rive.Fit.Contain,
-        alignment: rive.Alignment.Center,
-      }),
-    }); 
-
-    // Initialize Animation 6 (cb_loader)
-    const animation6 = {
-      id: 'animation-canvas-6',
-      src: '../assets/rive-files/cb_loader.riv', // Ensure this path is correct
-      stateMachine: 'CB-loader-sm' // Updated state machine name
-    };
-
-    const canvas6 = document.getElementById(animation6.id);
-    resizeDrawingSurfaceToCanvas(canvas6);
-
-    const riveAnimation6 = new rive.Rive({
-      src: animation6.src,
-      canvas: canvas6,
-      autoplay: true,
-      stateMachines: animation6.stateMachine, // Use the specified state machine name
-      layout: new rive.Layout({
-        fit: rive.Fit.Contain,
-        alignment: rive.Alignment.Center,
-      }),
-      onLoad: () => {
-        console.log(`${animation6.id} loaded successfully`);
-      },
-      onLoadError: (err) => {
-        console.error(`Error loading ${animation6.id}:`, err);
-      }
-    });
-
-    // Initialize Animation 7 (404_page)
-    const animation7 = {
-      id: 'animation-canvas-7',
-      src: '../assets/rive-files/404_page.riv',
-      stateMachine: '401_page_error-sm'
-    };
-
-    const canvas7 = document.getElementById(animation7.id);
-    resizeDrawingSurfaceToCanvas(canvas7);
-
-    const riveAnimation7 = new rive.Rive({
-      src: animation7.src,
-      canvas: canvas7,
-      autoplay: true,
-      stateMachines: animation7.stateMachine,
-      layout: new rive.Layout({
-        fit: rive.Fit.Contain,
-        alignment: rive.Alignment.Center,
-      }),
-    }); 
-
-    // Initialize Animation 8 (500_error)
-    const animation8 = {
-      id: 'animation-canvas-8',
-      src: '../assets/rive-files/500_error.riv',
-      stateMachine: 'State Machine 1'
-    };  
-
-    const canvas8 = document.getElementById(animation8.id);
-    resizeDrawingSurfaceToCanvas(canvas8);
-
-    const riveAnimation8 = new rive.Rive({
-      src: animation8.src,
-      canvas: canvas8,
-      autoplay: true, 
-      stateMachines: animation8.stateMachine,
-      layout: new rive.Layout({
-        fit: rive.Fit.Contain,
-        alignment: rive.Alignment.Center,
-      }),
-    });
-
-    // Initialize Animation 9 (504_page_error)
-    const animation9 = {
-      id: 'animation-canvas-9',
-      src: '../assets/rive-files/504_page_error.riv',
-      stateMachine: 'State Machine 1'
-    };
-
-    const canvas9 = document.getElementById(animation9.id);
-    resizeDrawingSurfaceToCanvas(canvas9);
-
-    const riveAnimation9 = new rive.Rive({
-      src: animation9.src,
-      canvas: canvas9,
-      autoplay: true,
-      stateMachines: animation9.stateMachine,
-      layout: new rive.Layout({
-        fit: rive.Fit.Contain,
-        alignment: rive.Alignment.Center,
-      }),
-    });
-
-    // Listen for all click events on the page
-    document.addEventListener('click', (event) => {
-        console.log('Clicked element:', event.target); // Log the clicked element
-        // You can add additional logic here to handle specific events
-    });
-  </script>
-</body>
