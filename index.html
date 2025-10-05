@@ -10,25 +10,24 @@
 body, html {
     margin: 0;
     font-family: Arial, sans-serif;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-    overflow-y: auto;   /* Allow vertical scrolling */
+    overflow-x: hidden;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #ECECEC;
-    padding-top: 0; /* Removed padding-top */
+    padding-top: 0;
 }
 canvas {
-    width: 100vw; /* Changed from fixed 4000px to 100% viewport width */
-    max-width: 100%; /* Ensures canvas doesn't overflow */
+    width: 100vw;
+    max-width: 100%;
     margin: 0 auto;
     display: block;
 }
-
 .video-container {
     position: relative;
-    width: min(900px, 85vw); /* Reduced from 1000px, 90vw */
-    height: min(571px, 54vw); /* Reduced proportionally from 635px, 57vw */
+    width: min(900px, 85vw);
+    height: min(571px, 54vw);
     background-image: url('assets/images/demo-box.svg');
     background-size: contain;
     background-repeat: no-repeat;
@@ -38,9 +37,8 @@ canvas {
     align-items: center;
     padding: 40px 0;
     margin: 0 auto;
-    z-index: 2; /* Place in front of the title */
+    z-index: 2;
 }
-
 #mainVideo {
     width: 85%;
     height: 85%;
@@ -48,47 +46,41 @@ canvas {
     border-radius: 12px;
     margin-top: 14px;
 }
-
 .section-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 900;
-    font-size: 100px; /* Increased from 60px */
+    font-size: 100px;
     color: #2E2E2E;
     text-align: right;
-    margin-bottom: -75px; /* Increased negative margin to push video up */
-    position: relative; /* Added to ensure proper layering */
-    z-index: 1; /* Place behind video container */
+    margin-bottom: -75px;
+    position: relative;
+    z-index: 1;
 }
-
 .section-title a {
     text-decoration: none;
     color: inherit;
     transition: color 0.2s ease-out, transform 2s ease-out;
     display: inline-block;
     transform-origin: center center;
-    font-weight: 700; /* Ensure the link inherits bold weight */
+    font-weight: 700;
 }
-
 .section-title a:hover {
     color: #983AB1;
 }
-
 .f-breadcrumb {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 0; /* Changed to only have vertical padding */
+    padding: 20px 0;
     background-color: transparent;
     z-index: 1000;
 }
-
 .f-breadcrumb.scrolled {
     background-color: rgba(236, 236, 236, 0.95);
     backdrop-filter: blur(5px);
     transition: background-color 0.3s ease;
 }
-
 .f-breadcrumb-wrapper {
     grid-column-gap: 8px;
     grid-row-gap: 8px;
@@ -96,27 +88,23 @@ canvas {
     justify-content: flex-start;
     align-items: center;
     display: flex;
-    padding-left: 40px; /* Added left padding instead of margin */
-    margin-left: 0; /* Remove auto margin */
+    padding-left: 40px;
+    margin-left: 0;
     margin-right: 0; 
 }
-
 .nav-left {
     display: flex;
     align-items: center;
     margin-right: 20px;
 }
-
 .nav-right {
     display: flex;
     gap: 40px;
 }
-
 .logo {
     width: 30px;
     height: 30px;
 }
-
 .f-breadcrumb-link {
     color: #2E2E2E;
     font-family: montserrat, sans-serif;
@@ -126,19 +114,16 @@ canvas {
     transition: color 0.2s, transform 0.3s ease-in-out;
     display: inline-block;
 }
-
 .f-breadcrumb-link:hover {
     color: #983AB1;
     transform: scale(0.95);
 }
-
 .rive-wrapper {
     position: relative;
     width: 100%;
-    margin-top: 0; /* Ensure no top margin */
-    padding-top: 0; /* Ensure no top padding */
+    margin-top: 0;
+    padding-top: 0;
 }
-
 #riveCanvasTop, #riveCanvasBottom {
     display: block;
     width: 100vw;
@@ -146,7 +131,6 @@ canvas {
     margin: 0;
     padding: 0;
 }
-
 .mobile-overlay {
     display: none;
     position: fixed;
@@ -161,7 +145,6 @@ canvas {
     text-align: center;
     padding: 20px;
 }
-
 .mobile-message {
     font-family: 'Montserrat', sans-serif;
     font-size: 24px;
@@ -169,8 +152,6 @@ canvas {
     max-width: 80%;
     line-height: 1.5;
 }
-
-/* Show overlay on mobile devices */
 @media screen and (max-width: 768px) {
     .mobile-overlay {
         display: flex;
@@ -204,58 +185,43 @@ canvas {
     <div class="rive-wrapper">
         <canvas id="riveCanvasTop"></canvas>
     </div>
-
     <h2 class="section-title">PROJECTS</h2>
     <div class="video-container">
-        <iframe 
-            src="https://player.vimeo.com/video/1061631937?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1"
+        <video 
+            id="reelVideo"
             width="90%"
             height="80%"
-            frameborder="0"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-            title="Motion Design Reel"
-            style="border-radius: 12px; margin-top: 12px; margin-left: 4px; object-fit: cover;"
-        ></iframe>
+            autoplay
+            loop
+            muted
+            playsinline
+            style="border-radius: 12px; margin-top: 12px; margin-left: 4px; object-fit: cover; cursor: pointer;"
+        >
+            <source src="assets/videos/reel.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
     </div>
-
-    <canvas id="riveCanvasBottom" class="bottom-canvas"></canvas>
-
+    
     <script>
-        let riveInstanceTop, riveInstanceBottom, widthNumInput;
-
-        const preloadAllImages = async () => {
-            const totalImages = 174; // 0 to 173
-            const preloadedImages = [];
-
-            console.log("Starting to preload all images...");
-
-
-
-
-            // Update Rive input if available
-            if (widthNumInput) {
-                widthNumInput.value = browserWidth;
-            }
-
-            // Update canvas height based on breakpoint
-            if (browserWidth >= 1017) {
-                canvas.style.height = '600px'; // wide height
+        const video = document.getElementById('reelVideo');
+        
+        video.addEventListener('click', function() {
+            if (video.muted) {
+                video.muted = false;
             } else {
-                canvas.style.height = '700px'; // skinny height
+                video.muted = true;
             }
+        });
+    </script>
+    <canvas id="riveCanvasBottom" class="bottom-canvas"></canvas>
+    <script>
+        let riveInstanceTop, riveInstanceBottom, widthNumInput, bottomWidthNumInput;
 
-            // Ensure Rive redraws on canvas resize
-            if (riveInstance) {
-                riveInstance.resizeDrawingSurfaceToCanvas();
-            }
-        }
-
+        // Shared event handler function for other events
         function onRiveEventReceived(riveEvent) {
             const eventData = riveEvent.data;
-
             if (eventData.type === rive.RiveEventType.OpenUrl) {
                 console.log("Event triggered:", eventData.name);
-
                 switch (eventData.name) {
                     case "Email":
                         window.open("https://mail.google.com/mail/u/0/?fs=1&to=bri.mograph@gmail.com&su=Hi%20Bri!&body=You%27re%20so%20cool%20and%20I%27m%20so%20cool.%20We%20should%20work%20together!&tf=cm", "_blank");
@@ -266,8 +232,8 @@ canvas {
                     case "linkedin":
                         window.open("https://www.linkedin.com/in/brianna-chiu-197b90a6/", "_blank");
                         break;
-                    case "etsy":
-                        window.open("https://www.etsy.com/shop/StreamoGraphics", "_blank");
+                    case "contra":
+                        window.open("https://contra.com/brianna_chiu_1pfc6q43", "_blank");
                         break;
                     case "behance":
                         window.open("https://www.behance.net/brichiu", "_blank");
@@ -284,13 +250,20 @@ canvas {
                     case "Looping":
                         window.location.href = "pages/looping-animations.html";
                         break;
+                    case "ER 2":
+                         window.open("https://www.behance.net/gallery/235944619/Earth-Rangers-Quest-A-CYOA-Game-Made-in-Rive", "_blank");
+                         break;
+                    case "Olie 2":
+                        window.open("https://www.behance.net/gallery/234364937/Meow-sic-with-Olie", "_blank");
+                         break;
+                    case "Stardust 2":
+                        window.open("pages/stardust.html", "_blank");
+                        break; 
                 }
             }
         }
 
-
-
-        // Initialize Rive
+        // Initialize top Rive instance
         riveInstanceTop = new rive.Rive({
             src: 'layouts-top.riv',
             canvas: document.getElementById('riveCanvasTop'),
@@ -300,9 +273,9 @@ canvas {
             onLoad: () => {
                 // Get state machine inputs
                 const inputs = riveInstanceTop.stateMachineInputs('State Machine 1');
-                const hoverInput = inputs.find(i => i.name === 'Hover'); // Make sure this matches your input name in Rive
+                const hoverInput = inputs.find(i => i.name === 'Hover');
                 widthNumInput = inputs.find(i => i.name === 'width num');
-
+                
                 // Add hover listeners to canvas
                 const canvas = document.getElementById('riveCanvasTop');
                 canvas.addEventListener('mouseenter', () => {
@@ -311,116 +284,77 @@ canvas {
                 canvas.addEventListener('mouseleave', () => {
                     if (hoverInput) hoverInput.value = false;
                 });
-
+                
                 riveInstanceTop.resizeDrawingSurfaceToCanvas();
             }
         });
-
-        // Second Rive instance using layouts-bot.riv
+       
+        // Initialize bottom Rive instance with view model support
         riveInstanceBottom = new rive.Rive({
             src: 'layouts-bot.riv',
             canvas: document.getElementById('riveCanvasBottom'),
+            autoBind: true,
             autoplay: true,
-            artboard: 'Site',
             stateMachines: 'State Machine 1',
-            assetLoader: (asset, bytes) => {
-                console.log("Asset loading:", {
-                    name: asset.name,
-                    fileExtension: asset.fileExtension,
-                    cdnUuid: asset.cdnUuid,
-                    isFont: asset.isFont,
-                    isImage: asset.isImage,
-                    bytes,
-                });
-
-                if (asset.isImage) {
-                    if (asset.name === 'profile') {
-                        return false;
-                    }
-                    
-                    // Load images in sequence
-                    let currentIndex = 0;
-                    const loadNextImage = () => {
-                        if (currentIndex <= 173) {
-                            // Use the absolute URL that we know works
-                            const formattedIndex = currentIndex.toString().padStart(5, "0");
-                            const filename = encodeURIComponent(`Reel gif_${formattedIndex}.png`);
-                            const imagePath = `https://bricchiu.github.io/website/assets/images/demo-reel-thumbnail/${filename}`;
-                            
-                            console.log('Attempting to load image from:', imagePath);
-
-                            fetch(imagePath)
-                                .then(res => {
-                                    if (!res.ok) {
-                                        console.error(`Failed to load image ${currentIndex}. Status: ${res.status}, URL: ${imagePath}`);
-                                        throw new Error(`Failed to load image ${currentIndex}`);
-                                    }
-                                    return res.arrayBuffer();
-                                })
-                                .then(arrayBuffer => rive.decodeImage(new Uint8Array(arrayBuffer)))
-                                .then(image => {
-                                    asset.setRenderImage(image);
-                                    image.unref();
-                                    currentIndex++;
-                                    loadNextImage(); // Load next image only after current one is set
-                                })
-                                .catch(err => console.error(`Error with image ${currentIndex}:`, err));
-                        }
-                    };
-                    
-                    loadNextImage();
-                    return true;
-                }
-                return false;
-            },
+            shouldDisableRiveListeners: false,
             onLoad: () => {
-                const inputs = riveInstanceBottom.stateMachineInputs('State Machine 1');
-                widthNumInput = inputs.find(i => i.name === 'width num');
-                riveInstanceBottom.resizeDrawingSurfaceToCanvas();
+        console.log('Bottom Rive instance loaded');
+        
+        // Get state machine inputs
+        const bottomInputs = riveInstanceBottom.stateMachineInputs('State Machine 1');
+        bottomWidthNumInput = bottomInputs.find(i => i.name === 'width num');
+        
+        // Set the width num input
+        if (bottomWidthNumInput) {
+            bottomWidthNumInput.value = window.innerWidth;
+            console.log('Set width num input to:', window.innerWidth);
+        }
+        
+        // Check for view model instance
+        if (riveInstanceBottom.viewModelInstance) {
+            console.log('Successfully accessed view model instance');
+        }
+        
+        riveInstanceBottom.resizeDrawingSurfaceToCanvas();
+        updateCanvasHeight();
+    }
+    // That's it! No onRiveEventReceived parameter here
+});
 
-                // Update canvas height on load and resize
-                updateCanvasHeight();
-                window.onresize = updateCanvasHeight;
-            }
-        });
+riveInstanceTop.on(rive.EventType.RiveEvent, onRiveEventReceived);
+riveInstanceBottom.on(rive.EventType.RiveEvent, onRiveEventReceived);
 
-        // Update both canvases when the window resizes
         function updateCanvasHeight() {
             const browserWidth = window.innerWidth;
             const topCanvas = document.getElementById('riveCanvasTop');
             const bottomCanvas = document.getElementById('riveCanvasBottom');
-
+            
             if (browserWidth >= 1017) {
                 topCanvas.style.height = '600px';    
                 bottomCanvas.style.height = '1570px';
             } else {
-                topCanvas.style.height = '700px';    // Half of 3054px
+                topCanvas.style.height = '700px';
                 bottomCanvas.style.height = '1820px';
             }
-
-
-    
-            // Update width inputs for both instances
+            
+            // Update width using state machine inputs
+            if (widthNumInput) {
+                widthNumInput.value = browserWidth;
+            }
+            if (bottomWidthNumInput) {
+                bottomWidthNumInput.value = browserWidth;
+            }
+            
             if (riveInstanceTop && riveInstanceBottom) {
-                const topInputs = riveInstanceTop.stateMachineInputs('State Machine 1');
-                const bottomInputs = riveInstanceBottom.stateMachineInputs('State Machine 1');
-                
-                const topWidthInput = topInputs.find(i => i.name === 'width num');
-                const bottomWidthInput = bottomInputs.find(i => i.name === 'width num');
-                
-                if (topWidthInput) topWidthInput.value = browserWidth;
-                if (bottomWidthInput) bottomWidthInput.value = browserWidth;
-                
                 riveInstanceTop.resizeDrawingSurfaceToCanvas();
                 riveInstanceBottom.resizeDrawingSurfaceToCanvas();
             }
         }
 
-        // Listen for Rive Events
-        riveInstanceTop.on(rive.EventType.RiveEvent, onRiveEventReceived);
-        riveInstanceBottom.on(rive.EventType.RiveEvent, onRiveEventReceived);
+        // Handle window resize
+        window.onresize = updateCanvasHeight;
 
-        // Update scroll listener to use new class name
+        // Update scroll listener
         window.addEventListener('scroll', function() {
             const nav = document.querySelector('.f-breadcrumb');
             if (window.scrollY > 50) {
@@ -435,7 +369,7 @@ canvas {
             const middlePosition = canvas.offsetTop + (canvas.offsetHeight / 2) - (window.innerHeight / 2);
             window.scrollTo({
                 top: middlePosition,
-                behavior: 'smooth' // Smooth scrolling
+                behavior: 'smooth'
             });
         }
     </script>
