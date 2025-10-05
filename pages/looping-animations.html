@@ -154,8 +154,8 @@
         loop 
         muted 
         playsinline
-        style="top:0;left:0;width:100%;height:100%;object-fit:cover;">
-        <source src="../assets/videos/linkloop.mp4" type="video/mp4">
+        style="top:0;left:0;width:100%;height:100%;">
+        <source src="../assets/videos/link.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
     </div>
@@ -167,8 +167,8 @@
         loop 
         muted 
         playsinline
-        style="top:0;left:0;width:100%;height:100%;object-fit:cover;">
-        <source src="../assets/videos/ghostloop.mp4" type="video/mp4">
+        style="top:0;left:0;width:100%;height:100%;">
+        <source src="../assets/videos/sword.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
     </div>
@@ -183,7 +183,7 @@
         loop 
         muted 
         playsinline
-        style="top:0;left:0;width:100%;height:100%;object-fit:cover;">
+        style="top:0;left:0;width:100%;height:100%;">
         <source src="../assets/videos/ghostloop.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
@@ -196,60 +196,86 @@
         loop 
         muted 
         playsinline
-        style="top:0;left:0;width:100%;height:100%;object-fit:cover;">
+        style="top:0;left:0;width:100%;height:100%;">
         <source src="../assets/videos/kirbyloop.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
     </div>
   </div>
 </div>
+   
+  <!-- Main Candace Stream Video - Centered with side margins -->
+<div style="max-width: 1200px; margin: 80px auto; padding: 0 40px;">
+  <video 
+    autoplay 
+    loop 
+    muted 
+    playsinline
+    style="width: 100%; height: auto; display: block; margin: 0 auto;">
+    <source src="../assets/videos/candace_stream.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  
+  <div class="f-heading-detail-small" style="text-align: center; margin-top: 30px;">STREAM OVERLAYS FOR TWITCH</div>
+  <div class="caption" style="text-align: center; max-width: 800px; margin: 10px auto 60px;">
+    <p><small>Had the fun opportunity to design and animate stream overlays for the VA of Candace from Genshin Impact!<br> Client wanted something in the style of her character's design—mock up and BTS below! <a href="https://www.etsy.com/shop/StreamoGraphics">Can find other streaming assets I've created here (they loop, too)!</a></small></p>
+  </div>
+</div>
 
-<div class="container---gapped">
-  <div class="iframe-container">
-    <video 
-      autoplay 
-      loop 
-      muted 
-      playsinline
-      style="width:100%;height:100%;object-fit:contain;">
-      <source src="../assets/videos/candace_stream.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
-  <div class="f-heading-detail-small" style="text-align: center;">STREAM OVERLAYS FOR TWITCH</div>
-  <div class="caption" style="text-align: center;">
-    <p><small>Had the fun opportunity to design and animate stream overlays for the VA of Candace from Genshin Impact!<br> Client wanted something in the style of her character's design—mock up and BTS below!<a href="https://www.etsy.com/shop/StreamoGraphics">Can find other streaming assets I've created here (they loop, too)!</a></small></p>
-  </div>
-  <div class="new-section-2">
-    <div class="video-column">
-      <div style="position:relative;">
+<!-- Two Column Layout for BTS, Mock Up, and Final -->
+<div style="max-width: 1400px; margin: 0 auto; padding: 0 40px 80px;">
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
+    
+    <!-- Left Column: BTS Video -->
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <div style="width: 100%; max-width: 500px;">
+        <div class="f-heading-detail-small" style="text-align: center; margin-bottom: 15px;">BTS</div>
         <video 
           autoplay 
           loop 
           muted 
           playsinline
-          style="top:0;left:0;width:100%;height:100%;object-fit:cover;">
+          style="width: 100%; height: auto; display: block;">
           <source src="../assets/videos/candace_bts.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
       </div>
     </div>
+    
+    <!-- Right Column: Mock Up and Final stacked -->
+    <div style="display: flex; flex-direction: column; gap: 40px;">
+      <!-- Mock Up -->
+      <div>
+        <div class="f-heading-detail-small" style="text-align: center; margin-bottom: 15px;">MOCK UP</div>
+        <img src="../assets/images/concept.png" alt="Concept" style="width: 100%; height: auto; display: block;">
+      </div>
+      
+      <!-- Final -->
+      <div>
+        <div class="f-heading-detail-small" style="text-align: center; margin-bottom: 15px;">FINAL</div>
+        <video 
+          autoplay 
+          loop 
+          muted
+          playsinline
+          style="width: 100%; height: auto; display: block;">
+          <source src="../assets/images/loop-shara.webm" type="video/webm">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    
   </div>
 </div>
 
-        <div class="text-column">
-          <div class="image-container" style="text-align: center;">
-            <div class="f-heading-detail-small" style="text-align: center;">MOCK UP</div>
-            <img src="../assets/images/concept.png" alt="Concept" style="max-width: 100%; height: auto;">
-
-            <div class="f-heading-detail-small" style="text-align: center;">FINAL</div>
-            <video src="../assets/images/loop-shara.webm" alt="Loop Shara" style="max-width: 20%; height: auto;" autoplay loop>
-      </div>
-        </div>
-
-        </div>
-      </div>
-    </div>
+<!-- Responsive CSS -->
+<style>
+  @media (max-width: 768px) {
+    div[style*="grid-template-columns: 1fr 1fr"] {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>
 
 
 
